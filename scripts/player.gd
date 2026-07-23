@@ -8,6 +8,10 @@ extends CharacterBody2D
 
 @onready var hitbox: CollisionShape2D = $CollisionShape2D
 
+@onready var cooldown_timer: Timer = $CooldownTimer
+@export var shot_cooldown: float = 1
+var shot_on_cooldown: bool = false
+
 @onready var cannon_sprite: Sprite2D = $Cannon
 var cannon_angle: float = 0
 
@@ -35,10 +39,12 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_released("turn_right") && turning == 1:
 		turning = 0
 	
-	if event.is_action_pressed("shoot"):
+	if event.is_action_pressed("shoot") && !shot_on_cooldown:
 		var new_bullet = bullet_scene.instantiate()
 		get_tree().root.add_child(new_bullet)
 		new_bullet.fire(rotation + cannon_angle, position, hitbox.shape.radius + 2)
+		shot_on_cooldown = true
+		cooldown_timer.start(shot_cooldown)
 
 func _physics_process(_delta: float) -> void:
 	var mouse_position: Vector2 = get_global_mouse_position()
@@ -55,3 +61,6 @@ func _physics_process(_delta: float) -> void:
 			velocity.y = move_speed_b
 		velocity = velocity.rotated(rotation)
 		move_and_slide()
+
+func _on_cooldown_timer_timeout() -> void:
+	shot_on_cooldown = false

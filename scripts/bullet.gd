@@ -2,7 +2,7 @@ extends Node2D
 
 var velocity: Vector2 = Vector2.ZERO
 @onready var life_timer = $Timer
-@export var bullet_speed: float = 200
+@export var bullet_speed: float = 400
 
 func fire(rotation_direction_rad: float, start_pos: Vector2, spawn_distance: float):
 	life_timer.start(5)

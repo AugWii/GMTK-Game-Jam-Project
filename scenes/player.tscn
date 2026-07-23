@@ -22,3 +22,7 @@ texture = ExtResource("1_3vyb7")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=56322967]
 position = Vector2(-0.5, 0)
 shape = SubResource("CircleShape2D_qhqgy")
+
+[node name="CooldownTimer" type="Timer" parent="." unique_id=829329003]
+
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
