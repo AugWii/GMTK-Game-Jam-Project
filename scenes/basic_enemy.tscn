@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://ca8vckllvengq"]
+
+[ext_resource type="Texture2D" uid="uid://d02qqbinwnl5k" path="res://icon.svg" id="1_3i4hm"]
+[ext_resource type="Script" uid="uid://qj43psohne6t" path="res://scripts/basic_enemy.gd" id="1_md22f"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_md22f"]
+radius = 64.50775
+
+[node name="BasicEnemy" type="CharacterBody2D" unique_id=1157887588]
+script = ExtResource("1_md22f")
+
+[node name="Body" type="Sprite2D" parent="." unique_id=250922839]
+texture = ExtResource("1_3i4hm")
+
+[node name="Cannon" type="Sprite2D" parent="." unique_id=130140803]
+position = Vector2(0, -35.4)
+scale = Vector2(0.3, 0.978125)
+texture = ExtResource("1_3i4hm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=82427892]
+position = Vector2(-0.5, 0)
+shape = SubResource("CircleShape2D_md22f")

@@ -1,10 +1,18 @@
 extends Node2D
 
 var velocity: Vector2 = Vector2.ZERO
-@onready var life_timer = $Timer
+@onready var life_timer = $LifeTimer
 @export var bullet_speed: float = 400
 
-func fire(rotation_direction_rad: float, start_pos: Vector2, spawn_distance: float):
+enum teams {PLAYER, ENEMY}
+var bullet_team: int = teams.PLAYER
+
+# called when the bullet is created
+func fire(rotation_direction_rad: float, start_pos: Vector2, spawn_distance: float, player_shot: bool):
+	if player_shot:
+		bullet_team = teams.PLAYER
+	else:
+		bullet_team = teams.ENEMY
 	life_timer.start(5)
 	position = start_pos
 	rotate(rotation_direction_rad)
@@ -15,5 +23,18 @@ func fire(rotation_direction_rad: float, start_pos: Vector2, spawn_distance: flo
 func _physics_process(delta: float) -> void:
 	position += velocity * delta
 
-func _on_timer_timeout() -> void:
+# called when the bullet hits something
+func _on_body_entered(body: Node2D) -> void:
+	var valid_hit = false
+	if body is Enemy:
+		body.get_hit()
+		valid_hit = true
+	elif body is Player && bullet_team == teams.ENEMY:
+		body.player_hit()
+		valid_hit = true
+	
+	if valid_hit:
+		queue_free()
+
+func _on_life_timer_timeout() -> void:
 	queue_free()
