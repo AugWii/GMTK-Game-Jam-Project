@@ -15,7 +15,8 @@ bullet_scene = ExtResource("2_qhqgy")
 texture = ExtResource("1_3vyb7")
 
 [node name="Cannon" type="Sprite2D" parent="." unique_id=1175861502]
-scale = Vector2(0.6, 0.6)
+position = Vector2(0, -35.4)
+scale = Vector2(0.3, 0.978125)
 texture = ExtResource("1_3vyb7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=56322967]
