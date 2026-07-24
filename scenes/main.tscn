@@ -4,20 +4,18 @@
 [ext_resource type="PackedScene" uid="uid://sq8y7301bq28" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://dvxy4e2ekam5s" path="res://scripts/main.gd" id="1_sugp2"]
 [ext_resource type="PackedScene" uid="uid://btyllt8x3fap5" path="res://scenes/main_menu.tscn" id="4_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://d02qqbinwnl5k" path="res://icon.svg" id="5_tbgi4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uwi0j"]
+size = Vector2(38, 38)
 
 [node name="Main" type="Node2D" unique_id=1539732622]
 script = ExtResource("1_sugp2")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=769795106]
 
-[node name="BasicEnemy3" parent="." unique_id=1157887588 instance=ExtResource("1_0wfyh")]
-position = Vector2(-375, -197)
-
-[node name="BasicEnemy2" parent="." unique_id=205774122 instance=ExtResource("1_0wfyh")]
-position = Vector2(-230, 213)
-
 [node name="BasicEnemy" parent="." unique_id=957698104 instance=ExtResource("1_0wfyh")]
-position = Vector2(336, -105)
+position = Vector2(398, -167)
 
 [node name="Player" parent="." unique_id=2099924487 instance=ExtResource("1_o5qli")]
 
@@ -69,5 +67,16 @@ vertical_alignment = 1
 
 [node name="MainMenu" parent="." unique_id=2042218293 instance=ExtResource("4_jyhfs")]
 visible = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1968140324]
+position = Vector2(-308, 6)
+scale = Vector2(1, 20)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1148510778]
+scale = Vector2(0.3046875, 0.3046875)
+texture = ExtResource("5_tbgi4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=529203]
+shape = SubResource("RectangleShape2D_uwi0j")
 
 [connection signal="start_game" from="MainMenu" to="." method="_on_main_menu_start_game"]
