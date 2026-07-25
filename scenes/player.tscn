@@ -1,8 +1,21 @@
 [gd_scene format=3 uid="uid://sq8y7301bq28"]
 
 [ext_resource type="Texture2D" uid="uid://d02qqbinwnl5k" path="res://icon.svg" id="1_3vyb7"]
+[ext_resource type="Shader" uid="uid://ccnor6oau8g7r" path="res://scripts/player.gdshader" id="1_dqkch"]
 [ext_resource type="Script" uid="uid://8ppow7bujplr" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="PackedScene" uid="uid://c1sr5pcbyl75e" path="res://scenes/bullet.tscn" id="2_qhqgy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
+shader = ExtResource("1_dqkch")
+shader_parameter/is_vulnerable = false
+shader_parameter/tint_color = Color(1, 0, 0, 1)
+shader_parameter/tint_amount = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
+shader = ExtResource("1_dqkch")
+shader_parameter/is_vulnerable = false
+shader_parameter/tint_color = Color(1, 0, 0, 1)
+shader_parameter/tint_amount = 0.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qhqgy"]
 radius = 64.50775
@@ -12,9 +25,11 @@ script = ExtResource("1_g2els")
 bullet_scene = ExtResource("2_qhqgy")
 
 [node name="Body" type="Sprite2D" parent="." unique_id=464521090]
+material = SubResource("ShaderMaterial_qlg0r")
 texture = ExtResource("1_3vyb7")
 
 [node name="Cannon" type="Sprite2D" parent="." unique_id=1175861502]
+material = SubResource("ShaderMaterial_dqkch")
 scale = Vector2(0.3, 0.978125)
 texture = ExtResource("1_3vyb7")
 offset = Vector2(0, -35)

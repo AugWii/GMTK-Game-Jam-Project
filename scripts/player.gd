@@ -27,8 +27,9 @@ var turning: int = 0
 @export var bullet_cap: int = 5
 
 @onready var rewind_timer: Timer = $RewindCountTimer
-var rewind_pos: Array[Vector3]
+var rewind_pos: Array[Vector4]
 @export var total_rewind_time: float = 5
+var is_rewinding: bool = false
 
 @onready var vulnerable_timer: Timer = $VulnerableTimer
 var is_vulnerable: bool = false
@@ -37,8 +38,8 @@ func _ready() -> void:
 	rewind_timer.start()
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"):
-		player_hit()
+	if is_rewinding:
+		return
 	
 	if event.is_action_pressed("move_forward"):
 		moving_dir = 1
@@ -66,6 +67,9 @@ func _input(event: InputEvent) -> void:
 			cooldown_timer.start(shot_cooldown)
 
 func _physics_process(_delta: float) -> void:
+	if is_rewinding:
+		return
+	
 	cannon_angle = get_angle_to(get_global_mouse_position()) + deg_to_rad(90)
 	cannon_sprite.rotation = cannon_angle
 	
@@ -99,21 +103,41 @@ func _on_cooldown_timer_timeout() -> void:
 
 func player_hit() -> void:
 	if is_vulnerable:
+		is_vulnerable = false
+		$Body.material.set_shader_parameter("is_vulnerable", false)
+		cannon_sprite.material.set_shader_parameter("is_vulnerable", false)
 		$/root/Main.countdown_func()
 		return
 	if rewind_pos.size() > 0:
-		var rewind_to: Vector3 = rewind_pos.back()
-		position.x = rewind_to.x
-		position.y = rewind_to.y
-		rotation = rewind_to.z
+		is_rewinding = true
+		moving_dir = 0
+		process_mode = Node.PROCESS_MODE_ALWAYS
+		get_tree().paused = true
+		$Body.material.set_shader_parameter("is_vulnerable", true)
+		cannon_sprite.material.set_shader_parameter("is_vulnerable", true)
 		is_vulnerable = true
+		
+		var pos_tween = create_tween()
+		for pos in rewind_pos:
+			pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / 4)
+			if pos.z < 0:
+				pos.z += deg_to_rad(360)
+			pos_tween.parallel().tween_property($".", "rotation", pos.z, rewind_timer.wait_time / 4)
+			pos_tween.parallel().tween_property(cannon_sprite, "rotation", pos.w, rewind_timer.wait_time / 4)
+		await pos_tween.finished
+		
 		vulnerable_timer.start(total_rewind_time)
+		process_mode = Node.PROCESS_MODE_INHERIT
+		get_tree().paused = false
+		is_rewinding = false
 	rewind_pos.clear()
 
 func _on_rewind_count_timer_timeout() -> void:
 	if rewind_pos.size() >= total_rewind_time * (1 / rewind_timer.wait_time):
 		rewind_pos.pop_back()
-	rewind_pos.push_front(Vector3(position.x, position.y, rotation))
+	rewind_pos.push_front(Vector4(position.x, position.y, rotation, cannon_sprite.rotation))
 
 func _on_vulnerable_timer_timeout() -> void:
+	$Body.material.set_shader_parameter("is_vulnerable", false)
+	cannon_sprite.material.set_shader_parameter("is_vulnerable", false)
 	is_vulnerable = false
