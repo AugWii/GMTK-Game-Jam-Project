@@ -38,6 +38,10 @@ var is_vulnerable: bool = false
 
 
 func _ready() -> void:
+	$Body.material.set_shader_parameter("is_vulnerable", false)
+	cannon_sprite.material.set_shader_parameter("is_vulnerable", false)
+	$"Body/Left Tread".material.set_shader_parameter("is_vulnerable", false)
+	$"Body/Right Tread".material.set_shader_parameter("is_vulnerable", false)
 	rewind_timer.start()
 
 

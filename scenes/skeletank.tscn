@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://qj43psohne6t" path="res://scripts/basic_enemy.gd" id="1_rg07t"]
 [ext_resource type="PackedScene" uid="uid://c1sr5pcbyl75e" path="res://scenes/bullet.tscn" id="2_m2lfp"]
 [ext_resource type="PackedScene" uid="uid://daswrk71wx7y3" path="res://scenes/marker.tscn" id="3_b7fci"]
-[ext_resource type="Shader" uid="uid://ch41fet432vcf" path="res://scripts/enemy.gdshader" id="4_q3shg"]
 [ext_resource type="Texture2D" uid="uid://6ue4tu2ut4cf" path="res://Skeletank Body.png" id="5_m2lfp"]
 [ext_resource type="Shader" uid="uid://ccnor6oau8g7r" path="res://scripts/player.gdshader" id="6_2bhgu"]
 [ext_resource type="Texture2D" uid="uid://ddr87yoom415c" path="res://Skeletank Cannon.png" id="6_b7fci"]
@@ -11,14 +10,48 @@
 [ext_resource type="Texture2D" uid="uid://bxovrivyyilpl" path="res://Skeletank Tread2.png" id="8_wgvo6"]
 [ext_resource type="Texture2D" uid="uid://dxxh12vglke0d" path="res://Skeletank Tread3.png" id="9_pftja"]
 
+[sub_resource type="Shader" id="Shader_ntvf8"]
+code = "shader_type canvas_item;
+
+uniform bool is_invincible = false;
+
+uniform vec4 tint_color : source_color = vec4(1.0, 0.0, 0.0, 0.0);
+uniform float tint_amount : hint_range(0.0, 1.0) = 0.5;
+
+void fragment() {
+	if (is_invincible) {
+		vec4 tex_color = texture(TEXTURE, UV);
+		//vec4 final_color = mix(tex_color, tint_color, tint_amount);
+		COLOR = vec4(tex_color.rgb, tex_color.a / 2.0);
+	}
+}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c5lux"]
-shader = ExtResource("4_q3shg")
+shader = SubResource("Shader_ntvf8")
 shader_parameter/is_invincible = false
 shader_parameter/tint_color = Color(1, 0, 0, 1)
 shader_parameter/tint_amount = 0.5
 
+[sub_resource type="Shader" id="Shader_2bhgu"]
+code = "shader_type canvas_item;
+
+uniform bool is_vulnerable = false;
+
+uniform vec4 tint_color : source_color = vec4(1.0, 0.0, 0.0, 1.0);
+uniform float tint_amount : hint_range(0.0, 1.0) = 0.5;
+
+void fragment() {
+	if (is_vulnerable) {
+		vec4 tex_color = texture(TEXTURE, UV);
+		vec4 final_color = mix(tex_color, tint_color, tint_amount);
+		COLOR = vec4(final_color.rgb, tex_color.a);
+	}
+}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fin5s"]
-shader = ExtResource("6_2bhgu")
+shader = SubResource("Shader_2bhgu")
 shader_parameter/is_vulnerable = false
 shader_parameter/tint_color = Color(1, 0, 0, 1)
 shader_parameter/tint_amount = 0.5
@@ -46,8 +79,25 @@ shader_parameter/is_vulnerable = false
 shader_parameter/tint_color = Color(1, 0, 0, 1)
 shader_parameter/tint_amount = 0.5
 
+[sub_resource type="Shader" id="Shader_86e1j"]
+code = "shader_type canvas_item;
+
+uniform bool is_invincible = false;
+
+uniform vec4 tint_color : source_color = vec4(1.0, 0.0, 0.0, 0.0);
+uniform float tint_amount : hint_range(0.0, 1.0) = 0.5;
+
+void fragment() {
+	if (is_invincible) {
+		vec4 tex_color = texture(TEXTURE, UV);
+		//vec4 final_color = mix(tex_color, tint_color, tint_amount);
+		COLOR = vec4(tex_color.rgb, tex_color.a / 2.0);
+	}
+}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ve544"]
-shader = ExtResource("4_q3shg")
+shader = SubResource("Shader_86e1j")
 shader_parameter/is_invincible = false
 shader_parameter/tint_color = Color(1, 0, 0, 0)
 shader_parameter/tint_amount = 0.5
