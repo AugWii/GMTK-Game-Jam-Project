@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Bullet
 
 @onready var life_timer = $LifeTimer
 @export var bullet_speed: float = 10

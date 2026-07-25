@@ -2,12 +2,15 @@
 
 [ext_resource type="Texture2D" uid="uid://d02qqbinwnl5k" path="res://icon.svg" id="1_3i4hm"]
 [ext_resource type="Script" uid="uid://qj43psohne6t" path="res://scripts/basic_enemy.gd" id="1_md22f"]
+[ext_resource type="PackedScene" uid="uid://c1sr5pcbyl75e" path="res://scenes/bullet.tscn" id="2_fn5nn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md22f"]
 radius = 64.50775
 
 [node name="BasicEnemy" type="CharacterBody2D" unique_id=1157887588]
+collision_layer = 3
 script = ExtResource("1_md22f")
+bullet_scene = ExtResource("2_fn5nn")
 
 [node name="Body" type="Sprite2D" parent="." unique_id=250922839]
 texture = ExtResource("1_3i4hm")
@@ -29,6 +32,10 @@ wait_time = 0.5
 autostart = true
 
 [node name="CooldownTimer" type="Timer" parent="." unique_id=672761370]
+wait_time = 0.196
+autostart = true
+
+[node name="Bullets" type="Node" parent="." unique_id=941666913]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
