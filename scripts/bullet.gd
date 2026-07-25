@@ -24,6 +24,8 @@ func fire(rotation_direction_rad: float, start_pos: Vector2, spawn_distance: flo
 	velocity = velocity.rotated(rotation_direction_rad)
 	position += velocity.normalized() * spawn_distance
 	bouces_left = total_bounces
+	await get_tree().create_timer(0.1).timeout
+	$CollisionShape2D.disabled = false
 
 func _physics_process(_delta: float) -> void:
 	var screen_rect: Rect2 = Rect2(-get_viewport_rect().get_center(), get_viewport_rect().size)
@@ -57,6 +59,9 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	var valid_hit = false
 	if body is Enemy:
 		body.get_hit()
+		valid_hit = true
+	if body is Player:
+		body.player_hit()
 		valid_hit = true
 	
 	if valid_hit:

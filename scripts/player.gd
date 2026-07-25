@@ -27,7 +27,21 @@ var turning: int = 0
 @onready var bullets_container: Node = $Bullets
 @export var bullet_cap: int = 5
 
+@onready var rewind_timer: Timer = $RewindCountTimer
+var rewind_pos: Array[Vector3]
+@export var total_rewind_time: float = 5
+
+@onready var vulnerable_timer: Timer = $VulnerableTimer
+var is_vulnerable: bool = false
+signal player_lose
+
+func _ready() -> void:
+	rewind_timer.start()
+
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"):
+		player_hit()
+	
 	if event.is_action_pressed("move_forward"):
 		moving_dir = 1
 	elif event.is_action_released("move_forward") && moving_dir == 1:
@@ -86,4 +100,22 @@ func _on_cooldown_timer_timeout() -> void:
 	shot_on_cooldown = false
 
 func player_hit() -> void:
-	print("player hit")
+	if is_vulnerable:
+		player_lose.emit()
+		return
+	if rewind_pos.size() > 0:
+		var rewind_to: Vector3 = rewind_pos.back()
+		position.x = rewind_to.x
+		position.y = rewind_to.y
+		rotation = rewind_to.z
+		is_vulnerable = true
+		vulnerable_timer.start(total_rewind_time)
+	rewind_pos.clear()
+
+func _on_rewind_count_timer_timeout() -> void:
+	if rewind_pos.size() >= total_rewind_time * (1 / rewind_timer.wait_time):
+		rewind_pos.pop_back()
+	rewind_pos.push_front(Vector3(position.x, position.y, rotation))
+
+func _on_vulnerable_timer_timeout() -> void:
+	is_vulnerable = false

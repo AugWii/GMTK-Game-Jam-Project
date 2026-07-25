@@ -23,8 +23,15 @@ offset = Vector2(0, -35)
 position = Vector2(-0.5, 0)
 shape = SubResource("CircleShape2D_qhqgy")
 
-[node name="CooldownTimer" type="Timer" parent="." unique_id=829329003]
-
 [node name="Bullets" type="Node" parent="." unique_id=525631849]
 
+[node name="CooldownTimer" type="Timer" parent="." unique_id=829329003]
+
+[node name="RewindCountTimer" type="Timer" parent="." unique_id=1774384604]
+wait_time = 0.25
+
+[node name="VulnerableTimer" type="Timer" parent="." unique_id=41807150]
+
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
+[connection signal="timeout" from="RewindCountTimer" to="." method="_on_rewind_count_timer_timeout"]
+[connection signal="timeout" from="VulnerableTimer" to="." method="_on_vulnerable_timer_timeout"]

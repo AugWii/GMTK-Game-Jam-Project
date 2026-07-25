@@ -21,6 +21,7 @@ texture = ExtResource("1_mkf8s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1904291631]
 shape = SubResource("CapsuleShape2D_y25gk")
+disabled = true
 
 [node name="LifeTimer" type="Timer" parent="." unique_id=18520087]
 
