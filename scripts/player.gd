@@ -119,12 +119,18 @@ func player_hit() -> void:
 		var pos_tween = create_tween()
 		for pos in rewind_pos:
 			pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / rewind_factor)
+			
 			if pos.z < 0:
 				pos.z += deg_to_rad(360)
+			
+			var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, pos.w)
+			
 			pos_tween.parallel().tween_property($".", "rotation", pos.z, rewind_timer.wait_time / rewind_factor)
-			pos_tween.parallel().tween_property(cannon_sprite, "rotation", pos.w, rewind_timer.wait_time / rewind_factor)
+			pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / rewind_factor)
 			rewind_pos.erase(pos)
-		pos_tween.parallel().tween_property(cannon_sprite, "rotation", get_angle_to(get_global_mouse_position()) + deg_to_rad(90), rewind_timer.wait_time / 4)
+			
+		var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, get_angle_to(get_global_mouse_position()) + deg_to_rad(90))
+		pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
 		await pos_tween.finished
 		
 		is_vulnerable = true
@@ -136,6 +142,8 @@ func player_hit() -> void:
 		is_rewinding = false
 
 func _on_rewind_count_timer_timeout() -> void:
+	if(is_rewinding): return
+	
 	if rewind_pos.size() >= total_rewind_time * (1 / rewind_timer.wait_time):
 		rewind_pos.pop_back()
 	rewind_pos.push_front(Vector4(position.x, position.y, rotation, cannon_sprite.rotation))
