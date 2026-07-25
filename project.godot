@@ -22,7 +22,7 @@ window/size/viewport_height=1080
 window/size/mode=2
 window/stretch/mode="viewport"
 mouse_cursor/custom_image="uid://dhlkj5kocg5lh"
-mouse_cursor/custom_image_hotspot=Vector2(74, 82)
+mouse_cursor/custom_image_hotspot=Vector2(50, 50)
 
 [dotnet]
 

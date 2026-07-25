@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://d02qqbinwnl5k" path="res://icon.svg" id="1_ukund"]
 [ext_resource type="Texture2D" uid="uid://fn88eq2lea8q" path="res://Red Square.png" id="2_b2xu7"]
 [ext_resource type="Texture2D" uid="uid://cstenqe6w0oay" path="res://more textures.png" id="3_t3p7j"]
+[ext_resource type="PackedScene" uid="uid://dux2p2fo741hw" path="res://scenes/skeletank.tscn" id="5_c0aay"]
 [ext_resource type="PackedScene" uid="uid://sq8y7301bq28" path="res://scenes/player.tscn" id="5_j8fpy"]
-[ext_resource type="PackedScene" uid="uid://ca8vckllvengq" path="res://scenes/basic_enemy.tscn" id="6_8agdh"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8iqp6"]
 
@@ -89,10 +89,10 @@ tile_set = SubResource("TileSet_4nftw")
 [node name="Player" parent="." unique_id=1300953787 instance=ExtResource("5_j8fpy")]
 rotation = 3.1415927
 
-[node name="BasicEnemy" parent="." unique_id=1157887588 node_paths=PackedStringArray("player") instance=ExtResource("6_8agdh")]
-position = Vector2(720, 304)
+[node name="Skeletank" parent="." unique_id=1157887588 node_paths=PackedStringArray("player") instance=ExtResource("5_c0aay")]
+position = Vector2(-712, -296)
 player = NodePath("../Player")
 
-[node name="BasicEnemy2" parent="." unique_id=1568068586 node_paths=PackedStringArray("player") instance=ExtResource("6_8agdh")]
-position = Vector2(-720, -296)
+[node name="Skeletank2" parent="." unique_id=887409960 node_paths=PackedStringArray("player") instance=ExtResource("5_c0aay")]
+position = Vector2(720, 296)
 player = NodePath("../Player")
