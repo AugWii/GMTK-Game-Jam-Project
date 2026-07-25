@@ -64,3 +64,4 @@ script = ExtResource("6_tefeu")
 Level1 = ExtResource("7_o6xl0")
 
 [connection signal="start_game" from="MainMenu" to="." method="_on_main_menu_start_game"]
+[connection signal="level_complete" from="Current Level" to="." method="_on_current_level_level_complete"]

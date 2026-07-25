@@ -107,7 +107,7 @@ func player_hit() -> void:
 		is_vulnerable = false
 		$Body.material.set_shader_parameter("is_vulnerable", false)
 		cannon_sprite.material.set_shader_parameter("is_vulnerable", false)
-		$/root/Main.countdown_func()
+		$/root/Main.level_lose()
 		return
 	if rewind_pos.size() > 0:
 		is_rewinding = true
