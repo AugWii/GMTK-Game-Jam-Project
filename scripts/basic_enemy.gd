@@ -43,6 +43,10 @@ var is_rewinding: bool = false
 
 @onready var countdon_label = $CountdownLabel
 
+#Shooting at random intervals
+@export var randomShotIntervals = false
+@export var shotIntervalMax: float = 1
+
 func _ready() -> void:
 	$Body.material.set_shader_parameter("is_invincible", false)
 	cannon_sprite.material.set_shader_parameter("is_invincible", false)
@@ -107,6 +111,7 @@ func _on_cooldown_timer_timeout() -> void:
 	
 	if playerSighted:
 		if bullets_container.get_child_count() < bullet_cap:
+			if(randomShotIntervals): shot_cooldown = randf_range(0, shotIntervalMax)
 			moving_dir = 0
 			
 			var new_bullet = bullet_scene.instantiate()
@@ -214,11 +219,4 @@ func _on_rewind_count_timer_timeout() -> void:
 	for child in marker_container.get_children():
 		child.queue_free()
 	
-	#for pos in rewind_pos:
-		#var posMarker = marker_scene.instantiate()
-		#posMarker.place(pos.x, pos.y)
-		#marker_container.add_child(posMarker)
-	
 	if(!is_rewinding): rewind_pos.push_front(Vector4(position.x, position.y, rotation, cannon_sprite.rotation)) #do nothingif rewinding
-	
-	#if(rewind_pos.size() <= 0): queue_free() #destroy enemy if it goes past queue
