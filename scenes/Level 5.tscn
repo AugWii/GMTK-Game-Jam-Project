@@ -109,4 +109,5 @@ player = NodePath("../Player")
 
 [node name="CountTankula" parent="." unique_id=1218515908 node_paths=PackedStringArray("player") instance=ExtResource("7_bud4c")]
 position = Vector2(192, -264)
+rotation = 3.1415927
 player = NodePath("../Player")

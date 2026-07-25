@@ -128,7 +128,6 @@ bullet_cap = 3
 total_rewind_time = 4.0
 marker_scene = ExtResource("3_xlxkh")
 marker_container = NodePath("MarkerContainer")
-randomShotIntervals = true
 
 [node name="Body" type="Sprite2D" parent="." unique_id=250922839]
 z_index = 1

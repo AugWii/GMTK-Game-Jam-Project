@@ -59,17 +59,19 @@ height = 128.0
 [node name="CountTankula" type="CharacterBody2D" unique_id=1157887588 node_paths=PackedStringArray("marker_container")]
 collision_layer = 3
 script = ExtResource("1_tptx4")
-move_speed_f = 90.0
-move_speed_b = 90.0
+move_speed_f = 70.0
+move_speed_b = 70.0
 bullet_scene = ExtResource("2_yn0bx")
 bullet_cap = 3
 total_rewind_time = 3.0
 marker_scene = ExtResource("3_2lngo")
 marker_container = NodePath("MarkerContainer")
+randomShotIntervals = true
 
 [node name="Body" type="Sprite2D" parent="." unique_id=250922839]
 z_index = 1
 material = SubResource("ShaderMaterial_c5lux")
+rotation = 3.1415927
 scale = Vector2(0.2239234, 0.22392339)
 texture = ExtResource("5_2ml6l")
 
@@ -90,12 +92,12 @@ sprite_frames = SubResource("SpriteFrames_0baf5")
 [node name="Cannon" type="Sprite2D" parent="." unique_id=130140803]
 z_index = 1
 material = SubResource("ShaderMaterial_ve544")
+position = Vector2(0, 30)
 scale = Vector2(0.16030882, 0.16030882)
 texture = ExtResource("10_i737h")
 offset = Vector2(21, -290)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1817491849]
-visible = false
 shape = SubResource("CapsuleShape2D_tp4x8")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=727220146]
