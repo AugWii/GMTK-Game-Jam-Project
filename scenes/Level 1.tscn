@@ -44,5 +44,6 @@ tile_set = SubResource("TileSet_3ay80")
 position = Vector2(-610, -226)
 rotation = 3.1415927
 
-[node name="BasicEnemy" parent="." unique_id=1157887588 instance=ExtResource("3_kbmnf")]
+[node name="BasicEnemy" parent="." unique_id=1157887588 node_paths=PackedStringArray("player") instance=ExtResource("3_kbmnf")]
 position = Vector2(614, 246)
+player = NodePath("../Player")

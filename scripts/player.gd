@@ -8,7 +8,6 @@ class_name Player
 
 # bullet to be shot
 @export var bullet_scene: PackedScene
-
 @onready var hitbox: CollisionShape2D = $CollisionShape2D
 
 # attributes for shooting

@@ -20,3 +20,15 @@ texture = ExtResource("1_3i4hm")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=82427892]
 position = Vector2(-0.5, 0)
 shape = SubResource("CircleShape2D_md22f")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=727220146]
+debug_enabled = true
+
+[node name="Timer" type="Timer" parent="." unique_id=1741435064]
+wait_time = 0.5
+autostart = true
+
+[node name="CooldownTimer" type="Timer" parent="." unique_id=672761370]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
