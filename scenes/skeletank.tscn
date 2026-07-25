@@ -145,6 +145,7 @@ visible = false
 shape = SubResource("CapsuleShape2D_q3shg")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=727220146]
+debug_enabled = true
 
 [node name="Timer" type="Timer" parent="." unique_id=1741435064]
 wait_time = 0.5

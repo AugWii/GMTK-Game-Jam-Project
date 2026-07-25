@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://d02qqbinwnl5k" path="res://icon.svg" id="1_ukund"]
 [ext_resource type="Texture2D" uid="uid://fn88eq2lea8q" path="res://Red Square.png" id="2_b2xu7"]
 [ext_resource type="Texture2D" uid="uid://cstenqe6w0oay" path="res://more textures.png" id="3_t3p7j"]
-[ext_resource type="Texture2D" path="res://level 2.png" id="4_ukund"]
+[ext_resource type="Texture2D" uid="uid://bg8fx7dd5r3l2" path="res://level 4.png" id="4_f0git"]
 [ext_resource type="PackedScene" uid="uid://sq8y7301bq28" path="res://scenes/player.tscn" id="5_j8fpy"]
 [ext_resource type="PackedScene" uid="uid://dux2p2fo741hw" path="res://scenes/skeletank.tscn" id="6_f0git"]
 [ext_resource type="PackedScene" uid="uid://i0migx4j6wdu" path="res://scenes/tank_o_lantern.tscn" id="7_8obwj"]
@@ -92,7 +92,7 @@ tile_set = SubResource("TileSet_4nftw")
 position = Vector2(-248, -120)
 rotation = 1.5707964
 scale = Vector2(1.5141776, 1.5141776)
-texture = ExtResource("4_ukund")
+texture = ExtResource("4_f0git")
 
 [node name="Player" parent="." unique_id=1300953787 instance=ExtResource("5_j8fpy")]
 position = Vector2(-610, -226)
