@@ -37,5 +37,10 @@ autostart = true
 
 [node name="Bullets" type="Node" parent="." unique_id=941666913]
 
+[node name="RewindCountTimer" type="Timer" parent="." unique_id=1734196384]
+wait_time = 0.25
+autostart = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
+[connection signal="timeout" from="RewindCountTimer" to="." method="_on_rewind_count_timer_timeout"]

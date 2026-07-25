@@ -30,8 +30,18 @@ var turning: int = 0
 @export var player: Player
 var playerSighted: bool = false;
 
+#rewind stuff
+@onready var rewind_timer: Timer = $RewindCountTimer
+var rewind_pos: Array[Vector4]
+@export var total_rewind_time: float = 5
+var is_rewinding: bool = false
+@export var rewind_factor: float = 4
+
 
 func _physics_process(_delta: float) -> void:
+	if is_rewinding:
+		return
+	
 	checkForPlayer()
 	
 	if playerSighted:
@@ -66,6 +76,9 @@ func _physics_process(_delta: float) -> void:
 		move_and_slide()
 
 func _on_cooldown_timer_timeout() -> void:
+	if is_rewinding:
+		return
+	
 	if playerSighted:
 		if bullets_container.get_child_count() < bullet_cap:
 			moving_dir = 0
@@ -95,12 +108,40 @@ func player_hit() -> void:
 	print("player hit")
 
 func get_hit():
-	queue_free()
+	if rewind_pos.size() > 0:
+		is_rewinding = true
+		
+		#TODO: set shader
+		
+		moving_dir = 0
+		turning = 0
+		
+		var pos_tween = create_tween()
+		for pos in rewind_pos:
+			if(rewind_pos.size() > 0): 
+				pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / rewind_factor)
+				
+				if pos.z < 0:
+					pos.z += deg_to_rad(360)
+				
+				var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, pos.w)
+				
+				pos_tween.parallel().tween_property($".", "rotation", pos.z, rewind_timer.wait_time / rewind_factor)
+				pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / rewind_factor)
+				
+				rewind_pos.erase(pos)
+			
+		var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, get_angle_to(get_global_mouse_position()) + deg_to_rad(90))
+		pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
+		await pos_tween.finished
+		
+		#TODO: remove shader
+		
+		is_rewinding = false
 
 #Pathfinding Code:
 func makePath() -> void:
 	nav_agent.target_position = player.position
-	
 
 func _on_timer_timeout() -> void:
 	makePath()
@@ -109,7 +150,8 @@ func _on_timer_timeout() -> void:
 	var angleToPlayer = to_local(nav_agent.get_next_path_position()).normalized().angle()
 	rotation += angleToPlayer + deg_to_rad(90);
 	moving_dir = 1;
+
+func _on_rewind_count_timer_timeout() -> void:
+	if(!is_rewinding): rewind_pos.push_front(Vector4(position.x, position.y, rotation, cannon_sprite.rotation)) #do nothingif rewinding
 	
-	
-	
-	pass # Replace with function body.
+	if(rewind_pos.size() <= 0): queue_free() #destroy enemy if it goes past queue
