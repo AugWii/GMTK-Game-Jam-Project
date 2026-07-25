@@ -163,7 +163,6 @@ func get_hit():
 				var pos = current_rewind[0]
 				
 				var skipTween: bool = false
-				
 				if(abs(position.x - pos.x) >= get_viewport_rect().size.x/4): skipTween = true
 				if(abs(position.y - pos.y) >= get_viewport_rect().size.y/4): skipTween = true
 				

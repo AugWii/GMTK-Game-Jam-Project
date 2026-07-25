@@ -139,21 +139,34 @@ func player_hit() -> void:
 		process_mode = Node.PROCESS_MODE_ALWAYS
 		get_tree().paused = true
 		
-		var pos_tween = create_tween()
+		
 		for pos in rewind_pos:
-			pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / rewind_factor)
 			
-			if pos.z < 0:
-				pos.z += deg_to_rad(360)
+			var skipTween: bool = false
+			if(abs(position.x - pos.x) >= get_viewport_rect().size.x/4): skipTween = true
+			if(abs(position.y - pos.y) >= get_viewport_rect().size.y/4): skipTween = true
 			
-			var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, pos.w)
-			
-			pos_tween.parallel().tween_property($".", "rotation", pos.z, rewind_timer.wait_time / rewind_factor)
-			pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / rewind_factor)
+			if(!skipTween):
+				var pos_tween = create_tween().set_parallel()
+				pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / rewind_factor)
+				
+				if pos.z < 0:
+					pos.z += deg_to_rad(360)
+				
+				var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, pos.w)
+				
+				pos_tween.tween_property($".", "rotation", pos.z, rewind_timer.wait_time / rewind_factor)
+				pos_tween.tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / rewind_factor)
+				
+				await pos_tween.finished
+			else:
+				position = Vector2(pos.x, pos.y)
+				
 			rewind_pos.erase(pos)
 			
+		var pos_tween = create_tween()
 		var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, get_angle_to(get_global_mouse_position()) + deg_to_rad(90))
-		pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
+		pos_tween.tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
 		await pos_tween.finished
 		
 		is_vulnerable = true
