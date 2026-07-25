@@ -20,6 +20,7 @@ func countdown_func() -> void:
 	var countdown_ui = $GUI/Control/Countdown
 	var countdown_label: Label = $GUI/Control/Countdown/CountdownLabel
 	var countdown: int = 3
+	countdown_label.add_theme_font_size_override("font_size", 40)
 	countdown_ui.visible = true
 	countdown_label.text = "Level " + str(level.curr_level_num)
 	await get_tree().create_timer(1.0).timeout
@@ -27,8 +28,13 @@ func countdown_func() -> void:
 		countdown_label.text = str(countdown)
 		await get_tree().create_timer(1.0).timeout
 		countdown -= 1
-	countdown_label.text = "Start!"
-	await get_tree().create_timer(1.0).timeout
+	if level.curr_level_num == 5:
+		countdown_label.add_theme_font_size_override("font_size", 120)
+		countdown_label.text = "TAKE THE COUNT DOWN!!!"
+		await get_tree().create_timer(2.0).timeout
+	else:
+		countdown_label.text = "Start!"
+		await get_tree().create_timer(1.0).timeout
 	countdown_ui.visible = false
 	get_tree().paused = false
 
