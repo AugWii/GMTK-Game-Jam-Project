@@ -108,6 +108,8 @@ func checkForPlayer() -> void:
 	else: playerSighted = true
 
 func get_hit():
+	if is_rewinding: return
+	
 	print("position storage size #1: " + str(rewind_pos.size()))
 	print(rewind_pos)
 	
@@ -119,25 +121,38 @@ func get_hit():
 		moving_dir = 0
 		turning = 0
 		
+		var rewind_steps: int = int((1/rewind_timer.wait_time)*total_rewind_time);
+		print("rewind_steps: " + str(rewind_steps))
+		var current_rewind: Array[Vector4]
+		if(rewind_pos.size() >= rewind_steps):
+			current_rewind = rewind_pos.slice(0, rewind_pos.size()-1 - rewind_steps)
+		else: 
+			current_rewind = rewind_pos
+		
+		current_rewind.reverse()
+		
 		var pos_tween = create_tween()
-		for pos in rewind_pos:
-			if(rewind_pos.size() > 0): 
+		for I in current_rewind.size():
+			var index = current_rewind.size()-1
+			
+			var pos = current_rewind[index]
+			if(current_rewind.size() > 0): 
 				pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / rewind_factor)
 				var newZ = pos.z
 				
-				if pos.z < 0:
-					newZ += deg_to_rad(360)
-				
+				if pos.z < 0: newZ += deg_to_rad(360)
 				var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, pos.w)
 				
 				pos_tween.parallel().tween_property($".", "rotation", newZ, rewind_timer.wait_time / rewind_factor)
 				pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / rewind_factor)
 				
-				rewind_pos.pop_front() #erase(pos)
+				current_rewind.pop_back()
+				rewind_pos.pop_front()
 			
-		var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, get_angle_to(get_global_mouse_position()) + deg_to_rad(90))
-		pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
-		print("position storage size #2: " + str(rewind_pos.size()))
+		if(current_rewind.size() > 0):
+			var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, get_angle_to(get_global_mouse_position()) + deg_to_rad(90))
+			pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
+			print("position storage size #2: " + str(current_rewind.size()))
 		await pos_tween.finished
 		
 		#TODO: remove shader
@@ -159,6 +174,7 @@ func _on_timer_timeout() -> void:
 func _on_rewind_count_timer_timeout() -> void:
 	for child in marker_container.get_children():
 		child.queue_free()
+	
 	for pos in rewind_pos:
 		var posMarker = marker_scene.instantiate()
 		posMarker.place(pos.x, pos.y)
