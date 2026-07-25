@@ -47,6 +47,18 @@ func _ready() -> void:
 	$Body.material.set_shader_parameter("is_invincible", false)
 	cannon_sprite.material.set_shader_parameter("is_invincible", false)
 
+func _process(_delta) -> void:
+	if moving_dir != 0:
+		$"Body/Left Tread".play()
+		$"Body/Right Tread".play()
+	elif turning == -1:
+		$"Body/Left Tread".play()
+	elif turning == 1:
+		$"Body/Right Tread".play()
+	else:
+		$"Body/Left Tread".pause()
+		$"Body/Right Tread".pause()
+
 func _physics_process(_delta: float) -> void:
 	$CountdownLabel/Label.text = str(rewind_pos.size() * rewind_timer.wait_time)
 	countdon_label.rotation = -rotation

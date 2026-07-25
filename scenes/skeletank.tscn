@@ -64,6 +64,7 @@ marker_scene = ExtResource("3_b7fci")
 marker_container = NodePath("MarkerContainer")
 
 [node name="Body" type="Sprite2D" parent="." unique_id=250922839]
+z_index = 1
 material = SubResource("ShaderMaterial_c5lux")
 scale = Vector2(0.22256857, 0.2225686)
 texture = ExtResource("5_m2lfp")
@@ -83,6 +84,7 @@ scale = Vector2(0.8625, 0.86250013)
 sprite_frames = SubResource("SpriteFrames_hsood")
 
 [node name="Cannon" type="Sprite2D" parent="." unique_id=130140803]
+z_index = 1
 material = SubResource("ShaderMaterial_ve544")
 scale = Vector2(0.20204403, 0.20204401)
 texture = ExtResource("6_b7fci")
