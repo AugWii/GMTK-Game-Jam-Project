@@ -33,7 +33,6 @@ var rewind_pos: Array[Vector3]
 
 @onready var vulnerable_timer: Timer = $VulnerableTimer
 var is_vulnerable: bool = false
-signal player_lose
 
 func _ready() -> void:
 	rewind_timer.start()
@@ -101,7 +100,7 @@ func _on_cooldown_timer_timeout() -> void:
 
 func player_hit() -> void:
 	if is_vulnerable:
-		player_lose.emit()
+		$/root/Main.countdown_func()
 		return
 	if rewind_pos.size() > 0:
 		var rewind_to: Vector3 = rewind_pos.back()

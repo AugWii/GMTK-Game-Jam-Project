@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 func LoadLevel(levelNum:int) -> void:
 	var currLevel:Node
 	for child in get_children():
-		child.free()
+		child.queue_free()
 	if(levelNum == 1):
 		currLevel = Level1.instantiate()
 		self.add_child(currLevel)
