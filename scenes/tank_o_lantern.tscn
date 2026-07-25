@@ -55,7 +55,11 @@ height = 128.0
 [node name="TankOLantern" type="CharacterBody2D" unique_id=1157887588 node_paths=PackedStringArray("marker_container")]
 collision_layer = 3
 script = ExtResource("1_v65bu")
+move_speed_f = 100.0
+move_speed_b = 90.0
 bullet_scene = ExtResource("2_ek8lu")
+bullet_cap = 3
+total_rewind_time = 4.0
 marker_scene = ExtResource("3_xlxkh")
 marker_container = NodePath("MarkerContainer")
 
