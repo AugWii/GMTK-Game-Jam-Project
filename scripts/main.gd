@@ -1,6 +1,5 @@
 extends Node2D
 
-@onready var player: Player = $Player
 @onready var main_menu = $MainMenu
 @onready var camera: Camera2D = $Camera2D
 
