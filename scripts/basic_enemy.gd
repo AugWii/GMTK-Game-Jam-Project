@@ -155,28 +155,40 @@ func get_hit():
 			current_rewind = rewind_pos
 		
 		
-		var pos_tween = create_tween()
 		for I in current_rewind.size() - 1:
 			#var index = current_rewind.size()-1
 			#print(current_rewind.size())
 			
 			if(current_rewind.size() > 0): 
 				var pos = current_rewind[0]
-				pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / rewind_factor)
-				var newZ = pos.z
 				
-				if pos.z < 0: newZ += deg_to_rad(360)
-				var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, pos.w)
+				var skipTween: bool = false
 				
-				pos_tween.parallel().tween_property($".", "rotation", newZ, rewind_timer.wait_time / rewind_factor)
-				pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / rewind_factor)
+				if(abs(position.x - pos.x) >= get_viewport_rect().size.x/4): skipTween = true
+				if(abs(position.y - pos.y) >= get_viewport_rect().size.y/4): skipTween = true
+				
+				if(!skipTween):
+					var pos_tween = create_tween().set_parallel()
+					pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / rewind_factor)
+					var newZ = pos.z
+					
+					if pos.z < 0: newZ += deg_to_rad(360)
+					var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, pos.w)
+					
+					pos_tween.tween_property($".", "rotation", newZ, rewind_timer.wait_time / rewind_factor)
+					pos_tween.tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / rewind_factor)
+					
+					await pos_tween.finished
+				else:
+					position = Vector2(pos.x, pos.y)
+				
 				current_rewind.pop_front()
 				rewind_pos.pop_front()
 		if(current_rewind.size() > 0):
+			var pos_tween = create_tween().set_parallel()
 			var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, get_angle_to(get_global_mouse_position()) + deg_to_rad(90))
-			pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
+			pos_tween.tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
 			#print("position storage size #2: " + str(current_rewind.size()))
-		await pos_tween.finished
 		if rewind_pos.size() == 0:
 			queue_free()
 		#TODO: remove shader
