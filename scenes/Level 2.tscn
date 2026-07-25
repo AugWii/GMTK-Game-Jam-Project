@@ -87,7 +87,6 @@ tile_map_data = PackedByteArray("AAAcAA4AAAABAAAAAAAcAAMAAAABAAAAAGAJAAMAAAABAAA
 tile_set = SubResource("TileSet_4nftw")
 
 [node name="Player" parent="." unique_id=1300953787 instance=ExtResource("5_j8fpy")]
-rotation = 3.1415927
 
 [node name="Skeletank" parent="." unique_id=1157887588 node_paths=PackedStringArray("player") instance=ExtResource("5_c0aay")]
 position = Vector2(-712, -296)

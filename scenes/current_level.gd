@@ -3,6 +3,8 @@ class_name CurrentLevel
 
 @export var Level1:PackedScene
 @export var Level2:PackedScene
+@export var Level3:PackedScene
+@export var Level4:PackedScene
 
 var currLevel:Node
 var curr_level_num = 0
@@ -35,6 +37,12 @@ func LoadLevel(levelNum:int) -> void:
 		call_deferred("add_child", currLevel)
 	if(levelNum == 2):
 		currLevel = Level2.instantiate()
+		call_deferred("add_child", currLevel)
+	if(levelNum == 3):
+		currLevel = Level3.instantiate()
+		call_deferred("add_child", currLevel)
+	if(levelNum == 4):
+		currLevel = Level4.instantiate()
 		call_deferred("add_child", currLevel)
 	
 	

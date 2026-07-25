@@ -3,9 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://d02qqbinwnl5k" path="res://icon.svg" id="1_ukund"]
 [ext_resource type="Texture2D" uid="uid://fn88eq2lea8q" path="res://Red Square.png" id="2_b2xu7"]
 [ext_resource type="Texture2D" uid="uid://cstenqe6w0oay" path="res://more textures.png" id="3_t3p7j"]
-[ext_resource type="Texture2D" uid="uid://d1ih3db8xexlc" path="res://level 2.png" id="4_ukund"]
+[ext_resource type="Texture2D" path="res://level 2.png" id="4_ukund"]
 [ext_resource type="PackedScene" uid="uid://sq8y7301bq28" path="res://scenes/player.tscn" id="5_j8fpy"]
-[ext_resource type="PackedScene" uid="uid://ca8vckllvengq" path="res://scenes/basic_enemy.tscn" id="6_8agdh"]
+[ext_resource type="PackedScene" uid="uid://dux2p2fo741hw" path="res://scenes/skeletank.tscn" id="6_f0git"]
+[ext_resource type="PackedScene" uid="uid://i0migx4j6wdu" path="res://scenes/tank_o_lantern.tscn" id="7_8obwj"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8iqp6"]
 
@@ -95,8 +96,19 @@ texture = ExtResource("4_ukund")
 
 [node name="Player" parent="." unique_id=1300953787 instance=ExtResource("5_j8fpy")]
 position = Vector2(-610, -226)
-rotation = 3.1415927
 
-[node name="BasicEnemy" parent="." unique_id=1157887588 node_paths=PackedStringArray("player") instance=ExtResource("6_8agdh")]
-position = Vector2(614, 246)
+[node name="Skeletank" parent="." unique_id=1157887588 node_paths=PackedStringArray("player") instance=ExtResource("6_f0git")]
+position = Vector2(-240, 0)
+player = NodePath("../Player")
+
+[node name="Skeletank2" parent="." unique_id=475452971 node_paths=PackedStringArray("player") instance=ExtResource("6_f0git")]
+position = Vector2(136, 0)
+player = NodePath("../Player")
+
+[node name="TankOLantern" parent="." unique_id=1214823318 node_paths=PackedStringArray("player") instance=ExtResource("7_8obwj")]
+position = Vector2(600, -240)
+player = NodePath("../Player")
+
+[node name="TankOLantern2" parent="." unique_id=51471262 node_paths=PackedStringArray("player") instance=ExtResource("7_8obwj")]
+position = Vector2(600, 200)
 player = NodePath("../Player")

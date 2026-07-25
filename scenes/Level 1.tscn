@@ -95,7 +95,6 @@ texture = ExtResource("1_oecem")
 
 [node name="Player" parent="." unique_id=1300953787 instance=ExtResource("2_gpsl1")]
 position = Vector2(-610, -226)
-rotation = 3.1415927
 
 [node name="Skeletank" parent="." unique_id=1157887588 node_paths=PackedStringArray("player") instance=ExtResource("6_4ae40")]
 position = Vector2(608, 260)
