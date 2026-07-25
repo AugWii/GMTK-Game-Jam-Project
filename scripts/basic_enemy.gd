@@ -32,8 +32,11 @@ var playerSighted: bool = false;
 
 
 func _physics_process(_delta: float) -> void:
-	#cannon_angle = get_angle_to(get_global_mouse_position()) + deg_to_rad(90)
-	#cannon_sprite.rotation = cannon_angle
+	if playerSighted:
+		cannon_angle = get_angle_to(player.position) + deg_to_rad(90)
+		cannon_sprite.rotation = cannon_angle
+	else:
+		cannon_sprite.rotation = 0
 	
 	#Screen Wrap Code:
 	var screen_rect: Rect2 = Rect2(-get_viewport_rect().get_center(), get_viewport_rect().size)
@@ -71,10 +74,10 @@ func _on_cooldown_timer_timeout() -> void:
 	query.collision_mask = 2 #only see collisions on physical layer 2
 	var result = space_state.intersect_ray(query)
 	
-	if(result): playerSighted = true
-	else: playerSighted = false
+	if(result): playerSighted = false
+	else: playerSighted = true
 	
-	if !playerSighted:
+	if playerSighted:
 		if bullets_container.get_child_count() < bullet_cap:
 			moving_dir = 0
 			
