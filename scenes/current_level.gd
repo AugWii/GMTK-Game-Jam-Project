@@ -17,7 +17,8 @@ func LoadLevel(levelNum:int) -> void:
 		child.queue_free()
 	if(levelNum == 1):
 		currLevel = Level1.instantiate()
-		self.add_child(currLevel)
+		call_deferred("add_child", currLevel)
+		#self.add_child(currLevel)
 	
 	
 	

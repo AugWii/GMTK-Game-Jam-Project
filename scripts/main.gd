@@ -14,6 +14,7 @@ func _on_main_menu_start_game() -> void:
 	countdown_func()
 	
 func countdown_func() -> void:
+	get_tree().paused = true
 	var countdown_ui = $GUI/Control/Countdown
 	var countdown_label: Label = $GUI/Control/Countdown/CountdownLabel
 	var countdown: int = 3
