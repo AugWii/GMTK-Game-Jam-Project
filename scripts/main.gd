@@ -2,10 +2,14 @@ extends Node2D
 
 @onready var player: Player = $Player
 @onready var main_menu = $MainMenu
+@onready var camera: Camera2D = $Camera2D
 
 func _ready() -> void:
 	get_tree().paused = true
 	main_menu.visible = true
+
+func _physics_process(_delta: float) -> void:
+	pass
 
 func _on_main_menu_start_game() -> void:
 	var countdown_ui = $GUI/Control/Countdown

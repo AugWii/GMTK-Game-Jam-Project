@@ -17,7 +17,7 @@ func fire(rotation_direction_rad: float, start_pos: Vector2, spawn_distance: flo
 		bullet_team = teams.PLAYER
 	else:
 		bullet_team = teams.ENEMY
-	life_timer.start(5)
+	life_timer.start(10)
 	position = start_pos
 	rotate(rotation_direction_rad)
 	velocity.y = -bullet_speed
@@ -25,12 +25,30 @@ func fire(rotation_direction_rad: float, start_pos: Vector2, spawn_distance: flo
 	position += velocity.normalized() * spawn_distance
 	bouces_left = total_bounces
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
+	var screen_rect: Rect2 = Rect2(-get_viewport_rect().get_center(), get_viewport_rect().size)
+	var y_size = screen_rect.size.y/2
+	var x_size = screen_rect.size.x/2
+	if !screen_rect.has_point(position):
+		if -position.y > y_size + 1:
+			position.y = y_size
+		elif position.y > y_size + 1:
+			position.y = -y_size
+		
+		if -position.x > x_size + 1:
+			position.x = x_size
+		elif position.x > x_size + 1:
+			position.x = -x_size
+	
 	var collision = move_and_collide(velocity)
 	if collision:
 		velocity = velocity.bounce(collision.get_normal())
 		rotation = velocity.angle() + deg_to_rad(90)
-		bouces_left -= 1
+		if bouces_left == 0:
+			queue_free()
+		else:
+			bouces_left -= 1
+		
 
 func _on_life_timer_timeout() -> void:
 	queue_free()
@@ -39,8 +57,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	var valid_hit = false
 	if body is Enemy:
 		body.get_hit()
-		valid_hit = true
-	elif bouces_left == 0:
 		valid_hit = true
 	
 	if valid_hit:

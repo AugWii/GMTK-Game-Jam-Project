@@ -53,6 +53,20 @@ func _physics_process(_delta: float) -> void:
 	cannon_angle = get_angle_to(get_global_mouse_position()) + deg_to_rad(90)
 	cannon_sprite.rotation = cannon_angle
 	
+	var screen_rect: Rect2 = Rect2(-get_viewport_rect().get_center(), get_viewport_rect().size)
+	var y_size = screen_rect.size.y/2
+	var x_size = screen_rect.size.x/2
+	if !screen_rect.has_point(position):
+		if -position.y > y_size + 1:
+			position.y = y_size
+		elif position.y > y_size + 1:
+			position.y = -y_size
+		
+		if -position.x > x_size + 1:
+			position.x = x_size
+		elif position.x > x_size + 1:
+			position.x = -x_size
+	
 	if turning != 0:
 		rotate(turning * deg_to_rad(turn_speed))
 	elif moving_dir != 0:
