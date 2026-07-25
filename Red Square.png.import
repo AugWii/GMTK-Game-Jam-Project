@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcrjw3pamwnj0"
-path="res://.godot/imported/GMTK Game Jam Project.icon.png-a1d09f5c9f551586690e0ef2c6ca8d6f.ctex"
+uid="uid://fn88eq2lea8q"
+path="res://.godot/imported/Red Square.png-ed1997622e3be717d0db34b2c5b2da13.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://GMTK Game Jam Project.icon.png"
-dest_files=["res://.godot/imported/GMTK Game Jam Project.icon.png-a1d09f5c9f551586690e0ef2c6ca8d6f.ctex"]
+source_file="res://Red Square.png"
+dest_files=["res://.godot/imported/Red Square.png-ed1997622e3be717d0db34b2c5b2da13.ctex"]
 
 [params]
 
