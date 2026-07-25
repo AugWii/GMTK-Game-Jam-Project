@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://fn88eq2lea8q" path="res://Red Square.png" id="2_kbmnf"]
 [ext_resource type="Texture2D" uid="uid://cstenqe6w0oay" path="res://more textures.png" id="3_8iqp6"]
 [ext_resource type="PackedScene" uid="uid://dux2p2fo741hw" path="res://scenes/skeletank.tscn" id="6_4ae40"]
-[ext_resource type="PackedScene" uid="uid://i0migx4j6wdu" path="res://scenes/tank_o_lantern.tscn" id="7_dyqk6"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8iqp6"]
 
@@ -99,11 +98,5 @@ position = Vector2(-610, -226)
 rotation = 3.1415927
 
 [node name="Skeletank" parent="." unique_id=1157887588 node_paths=PackedStringArray("player") instance=ExtResource("6_4ae40")]
-position = Vector2(539, 888)
+position = Vector2(608, 260)
 player = NodePath("../Player")
-
-[node name="TankOLantern" parent="." unique_id=116635220 node_paths=PackedStringArray("player") instance=ExtResource("7_dyqk6")]
-position = Vector2(602, 244)
-player = NodePath("../Player")
-total_rewind_time = 3.0
-rewind_factor = 4.5
