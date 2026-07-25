@@ -30,6 +30,7 @@ var turning: int = 0
 var rewind_pos: Array[Vector4]
 @export var total_rewind_time: float = 5
 var is_rewinding: bool = false
+@export var rewind_factor: float = 4
 
 @onready var vulnerable_timer: Timer = $VulnerableTimer
 var is_vulnerable: bool = false
@@ -114,21 +115,21 @@ func player_hit() -> void:
 		turning = 0
 		process_mode = Node.PROCESS_MODE_ALWAYS
 		get_tree().paused = true
-		$Body.material.set_shader_parameter("is_vulnerable", true)
-		cannon_sprite.material.set_shader_parameter("is_vulnerable", true)
 		
 		var pos_tween = create_tween()
 		for pos in rewind_pos:
-			pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / 4)
+			pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / rewind_factor)
 			if pos.z < 0:
 				pos.z += deg_to_rad(360)
-			pos_tween.parallel().tween_property($".", "rotation", pos.z, rewind_timer.wait_time / 4)
-			pos_tween.parallel().tween_property(cannon_sprite, "rotation", pos.w, rewind_timer.wait_time / 4)
+			pos_tween.parallel().tween_property($".", "rotation", pos.z, rewind_timer.wait_time / rewind_factor)
+			pos_tween.parallel().tween_property(cannon_sprite, "rotation", pos.w, rewind_timer.wait_time / rewind_factor)
 			rewind_pos.erase(pos)
 		pos_tween.parallel().tween_property(cannon_sprite, "rotation", get_angle_to(get_global_mouse_position()) + deg_to_rad(90), rewind_timer.wait_time / 4)
 		await pos_tween.finished
 		
 		is_vulnerable = true
+		$Body.material.set_shader_parameter("is_vulnerable", true)
+		cannon_sprite.material.set_shader_parameter("is_vulnerable", true)
 		vulnerable_timer.start(total_rewind_time)
 		process_mode = Node.PROCESS_MODE_INHERIT
 		get_tree().paused = false
