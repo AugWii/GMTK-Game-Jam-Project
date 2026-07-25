@@ -15,14 +15,16 @@ bullet_scene = ExtResource("2_qhqgy")
 texture = ExtResource("1_3vyb7")
 
 [node name="Cannon" type="Sprite2D" parent="." unique_id=1175861502]
-position = Vector2(0, -35.4)
 scale = Vector2(0.3, 0.978125)
 texture = ExtResource("1_3vyb7")
+offset = Vector2(0, -35)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=56322967]
 position = Vector2(-0.5, 0)
 shape = SubResource("CircleShape2D_qhqgy")
 
 [node name="CooldownTimer" type="Timer" parent="." unique_id=829329003]
+
+[node name="Bullets" type="Node" parent="." unique_id=525631849]
 
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var life_timer = $LifeTimer
-@export var bullet_speed: float = 4
+@export var bullet_speed: float = 10
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
