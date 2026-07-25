@@ -111,7 +111,7 @@ func _on_cooldown_timer_timeout() -> void:
 			
 			var new_bullet = bullet_scene.instantiate()
 			bullets_container.add_child(new_bullet)
-			new_bullet.fire(rotation + cannon_angle, position, hitbox.shape.radius + 30, true)
+			new_bullet.fire(rotation + cannon_angle, position, hitbox.shape.height/2 + 30, true)
 			shot_on_cooldown = true
 			cooldown_timer.start(shot_cooldown)
 		else:
