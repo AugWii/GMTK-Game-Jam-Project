@@ -1,7 +1,8 @@
 extends Node2D
 class_name CurrentLevel
 
-@export var Level1:PackedScene 
+@export var Level1:PackedScene
+@export var Level2:PackedScene
 
 var currLevel:Node
 var curr_level_num = 0
@@ -32,7 +33,9 @@ func LoadLevel(levelNum:int) -> void:
 	if(levelNum == 1):
 		currLevel = Level1.instantiate()
 		call_deferred("add_child", currLevel)
-		#self.add_child(currLevel)
+	if(levelNum == 2):
+		currLevel = Level2.instantiate()
+		call_deferred("add_child", currLevel)
 	
 	
 	
