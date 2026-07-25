@@ -59,7 +59,11 @@ height = 128.0
 [node name="CountTankula" type="CharacterBody2D" unique_id=1157887588 node_paths=PackedStringArray("marker_container")]
 collision_layer = 3
 script = ExtResource("1_tptx4")
+move_speed_f = 90.0
+move_speed_b = 90.0
 bullet_scene = ExtResource("2_yn0bx")
+bullet_cap = 3
+total_rewind_time = 3.0
 marker_scene = ExtResource("3_2lngo")
 marker_container = NodePath("MarkerContainer")
 

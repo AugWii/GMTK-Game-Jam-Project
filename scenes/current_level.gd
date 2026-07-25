@@ -5,6 +5,7 @@ class_name CurrentLevel
 @export var Level2:PackedScene
 @export var Level3:PackedScene
 @export var Level4:PackedScene
+@export var Level5:PackedScene
 
 var currLevel:Node
 var curr_level_num = 0
@@ -16,7 +17,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !currLevel:
 		return
 	var enemies_left: int = 0
@@ -43,6 +44,9 @@ func LoadLevel(levelNum:int) -> void:
 		call_deferred("add_child", currLevel)
 	if(levelNum == 4):
 		currLevel = Level4.instantiate()
+		call_deferred("add_child", currLevel)
+	if(levelNum == 5):
+		currLevel = Level5.instantiate()
 		call_deferred("add_child", currLevel)
 	
 	

@@ -41,11 +41,6 @@ theme_override_font_sizes/font_size = 50
 text = "Game Title Here"
 horizontal_alignment = 1
 
-[node name="PlayButton" type="Button" parent="Control/VBoxContainer" unique_id=1639825468]
-layout_mode = 2
-theme_override_font_sizes/font_size = 44
-text = "Play"
-
 [node name="Label2" type="Label" parent="Control/VBoxContainer" unique_id=1662710927]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
@@ -62,5 +57,10 @@ Being hit will cause you to be rewound a few seconds, after which, you are vulne
 To win, rewind all enemies past their original starting positions."
 fit_content = true
 horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="Control/VBoxContainer" unique_id=1639825468]
+layout_mode = 2
+theme_override_font_sizes/font_size = 44
+text = "Play"
 
 [connection signal="pressed" from="Control/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
