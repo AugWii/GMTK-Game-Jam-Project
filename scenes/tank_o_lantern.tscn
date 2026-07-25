@@ -4,11 +4,41 @@
 [ext_resource type="PackedScene" uid="uid://c1sr5pcbyl75e" path="res://scenes/bullet.tscn" id="2_ek8lu"]
 [ext_resource type="PackedScene" uid="uid://daswrk71wx7y3" path="res://scenes/marker.tscn" id="3_xlxkh"]
 [ext_resource type="Shader" uid="uid://ch41fet432vcf" path="res://scripts/enemy.gdshader" id="4_mh5yf"]
-[ext_resource type="Texture2D" uid="uid://d02qqbinwnl5k" path="res://icon.svg" id="5_ydxae"]
+[ext_resource type="Shader" uid="uid://ccnor6oau8g7r" path="res://scripts/player.gdshader" id="4_ydxae"]
+[ext_resource type="Texture2D" uid="uid://c2ywk3basenpg" path="res://Tank O Lantern Tread1.png" id="5_qwemo"]
+[ext_resource type="Texture2D" uid="uid://bygeayb3fev0b" path="res://Tank O Lantern Tread2.png" id="6_i5yv8"]
+[ext_resource type="Texture2D" uid="uid://d3t8tpufr1tdd" path="res://Tank O Lantern Body.png" id="8_0u7hu"]
+[ext_resource type="Texture2D" uid="uid://dh8e4g8xu20r2" path="res://Tank O Lantern Cannon.png" id="9_erq5s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c5lux"]
 shader = ExtResource("4_mh5yf")
 shader_parameter/is_invincible = false
+shader_parameter/tint_color = Color(1, 0, 0, 1)
+shader_parameter/tint_amount = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_idbwn"]
+shader = ExtResource("4_ydxae")
+shader_parameter/is_vulnerable = false
+shader_parameter/tint_color = Color(1, 0, 0, 1)
+shader_parameter/tint_amount = 0.5
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yxpkh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_qwemo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_i5yv8")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sx3de"]
+shader = ExtResource("4_ydxae")
+shader_parameter/is_vulnerable = false
 shader_parameter/tint_color = Color(1, 0, 0, 1)
 shader_parameter/tint_amount = 0.5
 
@@ -18,8 +48,9 @@ shader_parameter/is_invincible = false
 shader_parameter/tint_color = Color(1, 0, 0, 0)
 shader_parameter/tint_amount = 0.5
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_md22f"]
-radius = 64.50775
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a72qv"]
+radius = 32.0
+height = 128.0
 
 [node name="TankOLantern" type="CharacterBody2D" unique_id=1157887588 node_paths=PackedStringArray("marker_container")]
 collision_layer = 3
@@ -30,17 +61,32 @@ marker_container = NodePath("MarkerContainer")
 
 [node name="Body" type="Sprite2D" parent="." unique_id=250922839]
 material = SubResource("ShaderMaterial_c5lux")
-texture = ExtResource("5_ydxae")
+scale = Vector2(-0.17186457, -0.17186455)
+texture = ExtResource("8_0u7hu")
+
+[node name="Right Tread" type="AnimatedSprite2D" parent="Body" unique_id=374676196]
+z_index = -1
+material = SubResource("ShaderMaterial_idbwn")
+position = Vector2(238.55994, 7.145214e-13)
+scale = Vector2(0.8625, 0.86250013)
+sprite_frames = SubResource("SpriteFrames_yxpkh")
+
+[node name="Left Tread" type="AnimatedSprite2D" parent="Body" unique_id=1270263030]
+z_index = -1
+material = SubResource("ShaderMaterial_sx3de")
+position = Vector2(-238.55994, 0)
+scale = Vector2(0.8625, 0.86250013)
+sprite_frames = SubResource("SpriteFrames_yxpkh")
 
 [node name="Cannon" type="Sprite2D" parent="." unique_id=130140803]
 material = SubResource("ShaderMaterial_ve544")
-position = Vector2(0, -35.4)
-scale = Vector2(0.3, 0.978125)
-texture = ExtResource("5_ydxae")
+scale = Vector2(-0.13327456, -0.13327456)
+texture = ExtResource("9_erq5s")
+offset = Vector2(0, 280)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=82427892]
-position = Vector2(-0.5, 0)
-shape = SubResource("CircleShape2D_md22f")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=191988190]
+visible = false
+shape = SubResource("CapsuleShape2D_a72qv")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=727220146]
 
