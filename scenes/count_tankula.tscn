@@ -1,0 +1,152 @@
+[gd_scene format=3 uid="uid://031pbeglh0nv"]
+
+[ext_resource type="Script" uid="uid://qj43psohne6t" path="res://scripts/basic_enemy.gd" id="1_tptx4"]
+[ext_resource type="PackedScene" uid="uid://c1sr5pcbyl75e" path="res://scenes/bullet.tscn" id="2_yn0bx"]
+[ext_resource type="PackedScene" uid="uid://daswrk71wx7y3" path="res://scenes/marker.tscn" id="3_2lngo"]
+[ext_resource type="Shader" uid="uid://ch41fet432vcf" path="res://scripts/enemy.gdshader" id="4_dq2d4"]
+[ext_resource type="Texture2D" uid="uid://cbsre8cqq5rvi" path="res://Count Tankula Body.png" id="5_2ml6l"]
+[ext_resource type="Shader" uid="uid://ccnor6oau8g7r" path="res://scripts/player.gdshader" id="6_dr1bg"]
+[ext_resource type="Texture2D" uid="uid://b0frogtxh1ic3" path="res://Count Tankula Tread1.png" id="7_6o6qi"]
+[ext_resource type="Texture2D" uid="uid://dkev8g6edtgq7" path="res://Count Tankula Tread2.png" id="8_0kbkj"]
+[ext_resource type="Texture2D" uid="uid://dojnfe20t13at" path="res://Count Tankula Tread3.png" id="9_rhao2"]
+[ext_resource type="Texture2D" uid="uid://cry6qa1nk3og2" path="res://Count Tankula Cannon.png" id="10_i737h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c5lux"]
+shader = ExtResource("4_dq2d4")
+shader_parameter/is_invincible = false
+shader_parameter/tint_color = Color(1, 0, 0, 1)
+shader_parameter/tint_amount = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_umyq1"]
+shader = ExtResource("6_dr1bg")
+shader_parameter/is_vulnerable = false
+shader_parameter/tint_color = Color(1, 0, 0, 1)
+shader_parameter/tint_amount = 0.5
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0baf5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_6o6qi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_0kbkj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_rhao2")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xlac3"]
+shader = ExtResource("6_dr1bg")
+shader_parameter/is_vulnerable = false
+shader_parameter/tint_color = Color(1, 0, 0, 1)
+shader_parameter/tint_amount = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ve544"]
+shader = ExtResource("4_dq2d4")
+shader_parameter/is_invincible = false
+shader_parameter/tint_color = Color(1, 0, 0, 0)
+shader_parameter/tint_amount = 0.5
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tp4x8"]
+radius = 32.0
+height = 128.0
+
+[node name="CountTankula" type="CharacterBody2D" unique_id=1157887588 node_paths=PackedStringArray("marker_container")]
+collision_layer = 3
+script = ExtResource("1_tptx4")
+bullet_scene = ExtResource("2_yn0bx")
+marker_scene = ExtResource("3_2lngo")
+marker_container = NodePath("MarkerContainer")
+
+[node name="Body" type="Sprite2D" parent="." unique_id=250922839]
+z_index = 1
+material = SubResource("ShaderMaterial_c5lux")
+scale = Vector2(0.2239234, 0.22392339)
+texture = ExtResource("5_2ml6l")
+
+[node name="Right Tread" type="AnimatedSprite2D" parent="Body" unique_id=1880834151]
+z_index = -1
+material = SubResource("ShaderMaterial_umyq1")
+position = Vector2(180, 0)
+scale = Vector2(0.8625, 0.86250013)
+sprite_frames = SubResource("SpriteFrames_0baf5")
+
+[node name="Left Tread" type="AnimatedSprite2D" parent="Body" unique_id=1320523381]
+z_index = -1
+material = SubResource("ShaderMaterial_xlac3")
+position = Vector2(-180, 0)
+scale = Vector2(0.8625, 0.86250013)
+sprite_frames = SubResource("SpriteFrames_0baf5")
+
+[node name="Cannon" type="Sprite2D" parent="." unique_id=130140803]
+z_index = 1
+material = SubResource("ShaderMaterial_ve544")
+scale = Vector2(0.16030882, 0.16030882)
+texture = ExtResource("10_i737h")
+offset = Vector2(21, -290)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1817491849]
+visible = false
+shape = SubResource("CapsuleShape2D_tp4x8")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=727220146]
+
+[node name="Timer" type="Timer" parent="." unique_id=1741435064]
+wait_time = 0.5
+autostart = true
+
+[node name="CooldownTimer" type="Timer" parent="." unique_id=672761370]
+wait_time = 0.196
+autostart = true
+
+[node name="Bullets" type="Node" parent="." unique_id=941666913]
+
+[node name="RewindCountTimer" type="Timer" parent="." unique_id=1734196384]
+wait_time = 0.25
+autostart = true
+
+[node name="MarkerContainer" type="Node" parent="." unique_id=2040926918]
+
+[node name="CountdownLabel" type="Node2D" parent="." unique_id=1411375435]
+position = Vector2(0, -120)
+
+[node name="ColorRect" type="ColorRect" parent="CountdownLabel" unique_id=1367412306]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = -20.0
+offset_right = 41.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="CountdownLabel" unique_id=242097053]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -27.0
+offset_top = -18.5
+offset_right = 27.0
+offset_bottom = 18.5
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme_override_font_sizes/font_size = 35
+text = "0.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
+[connection signal="timeout" from="RewindCountTimer" to="." method="_on_rewind_count_timer_timeout"]
