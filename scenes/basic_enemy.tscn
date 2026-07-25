@@ -3,14 +3,17 @@
 [ext_resource type="Texture2D" uid="uid://d02qqbinwnl5k" path="res://icon.svg" id="1_3i4hm"]
 [ext_resource type="Script" uid="uid://qj43psohne6t" path="res://scripts/basic_enemy.gd" id="1_md22f"]
 [ext_resource type="PackedScene" uid="uid://c1sr5pcbyl75e" path="res://scenes/bullet.tscn" id="2_fn5nn"]
+[ext_resource type="PackedScene" uid="uid://daswrk71wx7y3" path="res://scenes/marker.tscn" id="3_cuegt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md22f"]
 radius = 64.50775
 
-[node name="BasicEnemy" type="CharacterBody2D" unique_id=1157887588]
+[node name="BasicEnemy" type="CharacterBody2D" unique_id=1157887588 node_paths=PackedStringArray("marker_container")]
 collision_layer = 3
 script = ExtResource("1_md22f")
 bullet_scene = ExtResource("2_fn5nn")
+marker_scene = ExtResource("3_cuegt")
+marker_container = NodePath("MarkerContainer")
 
 [node name="Body" type="Sprite2D" parent="." unique_id=250922839]
 texture = ExtResource("1_3i4hm")
@@ -40,6 +43,8 @@ autostart = true
 [node name="RewindCountTimer" type="Timer" parent="." unique_id=1734196384]
 wait_time = 0.25
 autostart = true
+
+[node name="MarkerContainer" type="Node" parent="." unique_id=2040926918]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]

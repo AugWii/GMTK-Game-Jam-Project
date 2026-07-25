@@ -37,6 +37,9 @@ var rewind_pos: Array[Vector4]
 var is_rewinding: bool = false
 @export var rewind_factor: float = 4
 
+#marker stuff
+@export var marker_scene: PackedScene
+@export var marker_container: Node
 
 func _physics_process(_delta: float) -> void:
 	if is_rewinding:
@@ -104,10 +107,10 @@ func checkForPlayer() -> void:
 	if(result): playerSighted = false
 	else: playerSighted = true
 
-func player_hit() -> void:
-	print("player hit")
-
 func get_hit():
+	print("position storage size #1: " + str(rewind_pos.size()))
+	print(rewind_pos)
+	
 	if rewind_pos.size() > 0:
 		is_rewinding = true
 		
@@ -120,19 +123,21 @@ func get_hit():
 		for pos in rewind_pos:
 			if(rewind_pos.size() > 0): 
 				pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / rewind_factor)
+				var newZ = pos.z
 				
 				if pos.z < 0:
-					pos.z += deg_to_rad(360)
+					newZ += deg_to_rad(360)
 				
 				var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, pos.w)
 				
-				pos_tween.parallel().tween_property($".", "rotation", pos.z, rewind_timer.wait_time / rewind_factor)
+				pos_tween.parallel().tween_property($".", "rotation", newZ, rewind_timer.wait_time / rewind_factor)
 				pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / rewind_factor)
 				
-				rewind_pos.erase(pos)
+				rewind_pos.pop_front() #erase(pos)
 			
 		var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, get_angle_to(get_global_mouse_position()) + deg_to_rad(90))
 		pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
+		print("position storage size #2: " + str(rewind_pos.size()))
 		await pos_tween.finished
 		
 		#TODO: remove shader
@@ -152,6 +157,13 @@ func _on_timer_timeout() -> void:
 	moving_dir = 1;
 
 func _on_rewind_count_timer_timeout() -> void:
+	for child in marker_container.get_children():
+		child.queue_free()
+	for pos in rewind_pos:
+		var posMarker = marker_scene.instantiate()
+		posMarker.place(pos.x, pos.y)
+		marker_container.add_child(posMarker)
+	
 	if(!is_rewinding): rewind_pos.push_front(Vector4(position.x, position.y, rotation, cannon_sprite.rotation)) #do nothingif rewinding
 	
 	if(rewind_pos.size() <= 0): queue_free() #destroy enemy if it goes past queue

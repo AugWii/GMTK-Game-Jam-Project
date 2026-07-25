@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://daswrk71wx7y3"]
+
+[ext_resource type="Texture2D" uid="uid://fn88eq2lea8q" path="res://Red Square.png" id="1_hy4mp"]
+[ext_resource type="Script" uid="uid://csctsrtumevt2" path="res://scenes/marker.gd" id="1_plg8q"]
+
+[node name="Marker" type="Node2D" unique_id=1764705940]
+script = ExtResource("1_plg8q")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1542023485]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_hy4mp")
