@@ -35,8 +35,25 @@ var is_rewinding: bool = false
 @onready var vulnerable_timer: Timer = $VulnerableTimer
 var is_vulnerable: bool = false
 
+
+
 func _ready() -> void:
 	rewind_timer.start()
+
+
+func _process(_delta) -> void:
+	if moving_dir != 0:
+		$"Body/Left Tread".play()
+		$"Body/Right Tread".play()
+	elif turning == -1:
+		$"Body/Left Tread".play()
+	elif turning == 1:
+		$"Body/Right Tread".play()
+	else:
+		$"Body/Left Tread".pause()
+		$"Body/Right Tread".pause()
+		
+
 
 func _input(event: InputEvent) -> void:
 	if is_rewinding:
@@ -63,7 +80,7 @@ func _input(event: InputEvent) -> void:
 		if bullets_container.get_child_count() < bullet_cap:
 			var new_bullet = bullet_scene.instantiate()
 			bullets_container.add_child(new_bullet)
-			new_bullet.fire(rotation + cannon_angle, position, hitbox.shape.radius + 30, true)
+			new_bullet.fire(rotation + cannon_angle, position, hitbox.shape.height/2 + 30, true)
 			shot_on_cooldown = true
 			cooldown_timer.start(shot_cooldown)
 
@@ -107,6 +124,8 @@ func player_hit() -> void:
 		is_vulnerable = false
 		$Body.material.set_shader_parameter("is_vulnerable", false)
 		cannon_sprite.material.set_shader_parameter("is_vulnerable", false)
+		$"Body/Left Tread".material.set_shader_parameter("is_vulnerable", false)
+		$"Body/Right Tread".material.set_shader_parameter("is_vulnerable", false)
 		$/root/Main.level_lose()
 		return
 	if rewind_pos.size() > 0:
@@ -136,6 +155,8 @@ func player_hit() -> void:
 		is_vulnerable = true
 		$Body.material.set_shader_parameter("is_vulnerable", true)
 		cannon_sprite.material.set_shader_parameter("is_vulnerable", true)
+		$"Body/Left Tread".material.set_shader_parameter("is_vulnerable", true)
+		$"Body/Right Tread".material.set_shader_parameter("is_vulnerable", true)
 		vulnerable_timer.start(total_rewind_time)
 		process_mode = Node.PROCESS_MODE_INHERIT
 		get_tree().paused = false
@@ -151,4 +172,6 @@ func _on_rewind_count_timer_timeout() -> void:
 func _on_vulnerable_timer_timeout() -> void:
 	$Body.material.set_shader_parameter("is_vulnerable", false)
 	cannon_sprite.material.set_shader_parameter("is_vulnerable", false)
+	$"Body/Left Tread".material.set_shader_parameter("is_vulnerable", false)
+	$"Body/Right Tread".material.set_shader_parameter("is_vulnerable", false)
 	is_vulnerable = false
