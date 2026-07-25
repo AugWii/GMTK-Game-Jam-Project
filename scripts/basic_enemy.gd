@@ -110,8 +110,8 @@ func checkForPlayer() -> void:
 func get_hit():
 	if is_rewinding: return
 	
-	print("position storage size #1: " + str(rewind_pos.size()))
-	print(rewind_pos)
+	#print("position storage size #1: " + str(rewind_pos.size()))
+	#print(rewind_pos)
 	
 	if rewind_pos.size() > 0:
 		is_rewinding = true
@@ -122,21 +122,23 @@ func get_hit():
 		turning = 0
 		
 		var rewind_steps: int = int((1/rewind_timer.wait_time)*total_rewind_time);
-		print("rewind_steps: " + str(rewind_steps))
+		#print("rewind_steps: " + str(rewind_steps))
 		var current_rewind: Array[Vector4]
-		if(rewind_pos.size() >= rewind_steps):
-			current_rewind = rewind_pos.slice(0, rewind_pos.size()-1 - rewind_steps)
+		if(rewind_pos.size() > rewind_steps):
+			current_rewind = rewind_pos.slice(0, rewind_steps-1)
 		else: 
 			current_rewind = rewind_pos
 		
-		current_rewind.reverse()
+		#current_rewind.reverse()
+		print(str(rewind_pos.size()) + " : " + str(current_rewind.size()))
 		
 		var pos_tween = create_tween()
-		for I in current_rewind.size():
-			var index = current_rewind.size()-1
+		for I in current_rewind.size() - 1:
+			#var index = current_rewind.size()-1
+			#print(current_rewind.size())
 			
-			var pos = current_rewind[index]
 			if(current_rewind.size() > 0): 
+				var pos = current_rewind[0]
 				pos_tween.tween_property($".", "position", Vector2(pos.x, pos.y), rewind_timer.wait_time / rewind_factor)
 				var newZ = pos.z
 				
@@ -145,16 +147,15 @@ func get_hit():
 				
 				pos_tween.parallel().tween_property($".", "rotation", newZ, rewind_timer.wait_time / rewind_factor)
 				pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / rewind_factor)
-				
-				current_rewind.pop_back()
+				current_rewind.pop_front()
 				rewind_pos.pop_front()
-			
 		if(current_rewind.size() > 0):
 			var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, get_angle_to(get_global_mouse_position()) + deg_to_rad(90))
 			pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
 			print("position storage size #2: " + str(current_rewind.size()))
 		await pos_tween.finished
-		
+		if rewind_pos.size() == 0:
+			queue_free()
 		#TODO: remove shader
 		
 		is_rewinding = false
@@ -172,6 +173,8 @@ func _on_timer_timeout() -> void:
 	moving_dir = 1;
 
 func _on_rewind_count_timer_timeout() -> void:
+	if is_rewinding:
+		return
 	for child in marker_container.get_children():
 		child.queue_free()
 	
@@ -182,4 +185,4 @@ func _on_rewind_count_timer_timeout() -> void:
 	
 	if(!is_rewinding): rewind_pos.push_front(Vector4(position.x, position.y, rotation, cannon_sprite.rotation)) #do nothingif rewinding
 	
-	if(rewind_pos.size() <= 0): queue_free() #destroy enemy if it goes past queue
+	#if(rewind_pos.size() <= 0): queue_free() #destroy enemy if it goes past queue
