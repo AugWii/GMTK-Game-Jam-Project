@@ -43,6 +43,10 @@ var is_rewinding: bool = false
 
 @onready var countdon_label = $CountdownLabel
 
+func _ready() -> void:
+	$Body.material.set_shader_parameter("is_invincible", false)
+	cannon_sprite.material.set_shader_parameter("is_invincible", false)
+
 func _physics_process(_delta: float) -> void:
 	$CountdownLabel/Label.text = str(rewind_pos.size() * rewind_timer.wait_time)
 	countdon_label.rotation = -rotation
@@ -138,8 +142,6 @@ func get_hit():
 		else: 
 			current_rewind = rewind_pos
 		
-		#current_rewind.reverse()
-		print(str(rewind_pos.size()) + " : " + str(current_rewind.size()))
 		
 		var pos_tween = create_tween()
 		for I in current_rewind.size() - 1:
@@ -161,7 +163,7 @@ func get_hit():
 		if(current_rewind.size() > 0):
 			var shortest_cannon_angle = cannon_sprite.rotation + angle_difference(cannon_sprite.rotation, get_angle_to(get_global_mouse_position()) + deg_to_rad(90))
 			pos_tween.parallel().tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
-			print("position storage size #2: " + str(current_rewind.size()))
+			#print("position storage size #2: " + str(current_rewind.size()))
 		await pos_tween.finished
 		if rewind_pos.size() == 0:
 			queue_free()
