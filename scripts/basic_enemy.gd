@@ -41,7 +41,13 @@ var is_rewinding: bool = false
 @export var marker_scene: PackedScene
 @export var marker_container: Node
 
+@onready var countdon_label = $CountdownLabel
+
 func _physics_process(_delta: float) -> void:
+	$CountdownLabel/Label.text = str(rewind_pos.size() * rewind_timer.wait_time)
+	countdon_label.rotation = -rotation
+	countdon_label.global_position = position + Vector2(0, -120)
+	
 	if is_rewinding:
 		return
 	
@@ -50,6 +56,7 @@ func _physics_process(_delta: float) -> void:
 	if playerSighted:
 		cannon_angle = get_angle_to(player.position) + deg_to_rad(90)
 		cannon_sprite.rotation = cannon_angle
+		
 	else:
 		cannon_sprite.rotation = 0
 	
@@ -115,6 +122,8 @@ func get_hit():
 	
 	if rewind_pos.size() > 0:
 		is_rewinding = true
+		$Body.material.set_shader_parameter("is_invincible", true)
+		cannon_sprite.material.set_shader_parameter("is_invincible", true)
 		
 		#TODO: set shader
 		
@@ -158,6 +167,8 @@ func get_hit():
 			queue_free()
 		#TODO: remove shader
 		
+		$Body.material.set_shader_parameter("is_invincible", false)
+		cannon_sprite.material.set_shader_parameter("is_invincible", false)
 		is_rewinding = false
 
 #Pathfinding Code:
@@ -178,10 +189,10 @@ func _on_rewind_count_timer_timeout() -> void:
 	for child in marker_container.get_children():
 		child.queue_free()
 	
-	for pos in rewind_pos:
-		var posMarker = marker_scene.instantiate()
-		posMarker.place(pos.x, pos.y)
-		marker_container.add_child(posMarker)
+	#for pos in rewind_pos:
+		#var posMarker = marker_scene.instantiate()
+		#posMarker.place(pos.x, pos.y)
+		#marker_container.add_child(posMarker)
 	
 	if(!is_rewinding): rewind_pos.push_front(Vector4(position.x, position.y, rotation, cannon_sprite.rotation)) #do nothingif rewinding
 	
