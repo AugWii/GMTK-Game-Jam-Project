@@ -1,0 +1,30 @@
+[gd_scene format=4 uid="uid://dlrnkn00xcdak"]
+
+[ext_resource type="Texture2D" uid="uid://d02qqbinwnl5k" path="res://icon.svg" id="1_vv25x"]
+[ext_resource type="PackedScene" uid="uid://sq8y7301bq28" path="res://scenes/player.tscn" id="2_gpsl1"]
+[ext_resource type="PackedScene" uid="uid://ca8vckllvengq" path="res://scenes/basic_enemy.tscn" id="3_kbmnf"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ymo8b"]
+texture = ExtResource("1_vv25x")
+texture_region_size = Vector2i(120, 120)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-60, -60, 60, -60, 60, 60, -60, 60)
+
+[sub_resource type="TileSet" id="TileSet_3ay80"]
+tile_size = Vector2i(120, 120)
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_ymo8b")
+
+[node name="Level1" type="Node2D" unique_id=2080975703]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1140652159]
+position = Vector2(-960, -540)
+tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAQAAAAAAAAAAAAcAAQAAAAAAAAAAAAgAAQAAAAAAAAABAAAAAQAAAAAAAAAEAAAAAQAAAAAAAAAFAAAAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAQAAAAAAAAAIAAAAAQAAAAAAAAAJAAAAAQAAAAAAAAAKAAAAAQAAAAAAAAALAAAAAQAAAAAAAAAMAAAAAQAAAAAAAAANAAAAAQAAAAAAAAAOAAAAAQAAAAAAAAABAAgAAQAAAAAAAAAPAAAAAQAAAAAAAAAPAAEAAQAAAAAAAAAPAAIAAQAAAAAAAAAPAAMAAQAAAAAAAAAPAAQAAQAAAAAAAAAPAAUAAQAAAAAAAAAPAAYAAQAAAAAAAAAPAAcAAQAAAAAAAAAPAAgAAQAAAAAAAAAOAAgAAQAAAAAAAAANAAgAAQAAAAAAAAAMAAgAAQAAAAAAAAALAAgAAQAAAAAAAAAKAAgAAQAAAAAAAAAJAAgAAQAAAAAAAAAIAAgAAQAAAAAAAAAHAAgAAQAAAAAAAAAGAAgAAQAAAAAAAAAFAAgAAQAAAAAAAAAEAAgAAQAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAFAAQAAQAAAAAAAAAKAAcAAQAAAAAAAAAKAAYAAQAAAAAAAAAKAAUAAQAAAAAAAAAKAAQAAQAAAAAAAAAFAAEAAQAAAAAAAAACAAgAAQAAAAAAAAADAAgAAQAAAAAAAAADAAAAAQAAAAAAAAACAAAAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_3ay80")
+
+[node name="Player" parent="." unique_id=1300953787 instance=ExtResource("2_gpsl1")]
+position = Vector2(-610, -226)
+rotation = 3.1415927
+
+[node name="BasicEnemy" parent="." unique_id=1157887588 instance=ExtResource("3_kbmnf")]
+position = Vector2(614, 246)

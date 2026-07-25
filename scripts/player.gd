@@ -45,7 +45,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("shoot") && !shot_on_cooldown:
 		var new_bullet = bullet_scene.instantiate()
 		get_tree().root.add_child(new_bullet)
-		new_bullet.fire(rotation + cannon_angle, position, hitbox.shape.radius + 25, true)
+		new_bullet.fire(rotation + cannon_angle, global_position, hitbox.shape.radius + 25, true)
 		shot_on_cooldown = true
 		cooldown_timer.start(shot_cooldown)
 
@@ -56,16 +56,16 @@ func _physics_process(_delta: float) -> void:
 	var screen_rect: Rect2 = Rect2(-get_viewport_rect().get_center(), get_viewport_rect().size)
 	var y_size = screen_rect.size.y/2
 	var x_size = screen_rect.size.x/2
-	if !screen_rect.has_point(position):
-		if -position.y > y_size + 1:
-			position.y = y_size
-		elif position.y > y_size + 1:
-			position.y = -y_size
+	if !screen_rect.has_point(global_position):
+		if -global_position.y > y_size + 1:
+			global_position.y = y_size
+		elif global_position.y > y_size + 1:
+			global_position.y = -y_size
 		
-		if -position.x > x_size + 1:
-			position.x = x_size
-		elif position.x > x_size + 1:
-			position.x = -x_size
+		if -global_position.x > x_size + 1:
+			global_position.x = x_size
+		elif global_position.x > x_size + 1:
+			global_position.x = -x_size
 	
 	if turning != 0:
 		rotate(turning * deg_to_rad(turn_speed))

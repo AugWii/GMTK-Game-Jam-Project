@@ -15,6 +15,9 @@ func _on_main_menu_start_game() -> void:
 	var countdown_ui = $GUI/Control/Countdown
 	var countdown_label: Label = $GUI/Control/Countdown/CountdownLabel
 	var countdown: int = 3
+	
+	$"Current Level".LoadLevel(1)
+	
 	countdown_ui.visible = true
 	while countdown > 0:
 		countdown_label.text = str(countdown)
