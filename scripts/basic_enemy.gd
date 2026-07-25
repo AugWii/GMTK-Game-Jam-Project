@@ -12,7 +12,7 @@ class_name Enemy
 
 # attributes for shooting
 @onready var cooldown_timer: Timer = $CooldownTimer
-@export var shot_cooldown: float = 0.4
+@export var shot_cooldown: float = 0.6
 var shot_on_cooldown: bool = false
 
 # cannon attributes
@@ -32,6 +32,8 @@ var playerSighted: bool = false;
 
 
 func _physics_process(_delta: float) -> void:
+	checkForPlayer()
+	
 	if playerSighted:
 		cannon_angle = get_angle_to(player.position) + deg_to_rad(90)
 		cannon_sprite.rotation = cannon_angle
@@ -47,7 +49,6 @@ func _physics_process(_delta: float) -> void:
 			global_position.y = y_size
 		elif global_position.y > y_size + 1:
 			global_position.y = -y_size
-		
 		if -global_position.x > x_size + 1:
 			global_position.x = x_size
 		elif global_position.x > x_size + 1:
@@ -65,18 +66,6 @@ func _physics_process(_delta: float) -> void:
 		move_and_slide()
 
 func _on_cooldown_timer_timeout() -> void:
-	#Check for line of sight to player
-	var space_state = get_world_2d().direct_space_state
-	var checkStart = position
-	var checkEnd = player.position
-	var query = PhysicsRayQueryParameters2D.create(checkStart, checkEnd)
-	query.exclude = [get_rid(), player.get_rid(), bullet_scene.get_rid()]
-	query.collision_mask = 2 #only see collisions on physical layer 2
-	var result = space_state.intersect_ray(query)
-	
-	if(result): playerSighted = false
-	else: playerSighted = true
-	
 	if playerSighted:
 		if bullets_container.get_child_count() < bullet_cap:
 			moving_dir = 0
@@ -88,6 +77,19 @@ func _on_cooldown_timer_timeout() -> void:
 			cooldown_timer.start(shot_cooldown)
 		else:
 			moving_dir = 1
+
+func checkForPlayer() -> void:
+	#Check for line of sight to player
+	var space_state = get_world_2d().direct_space_state
+	var checkStart = position
+	var checkEnd = player.position
+	var query = PhysicsRayQueryParameters2D.create(checkStart, checkEnd)
+	query.exclude = [get_rid(), player.get_rid(), bullet_scene.get_rid()]
+	query.collision_mask = 2 #only see collisions on physical layer 2
+	var result = space_state.intersect_ray(query)
+	
+	if(result): playerSighted = false
+	else: playerSighted = true
 
 func player_hit() -> void:
 	print("player hit")
