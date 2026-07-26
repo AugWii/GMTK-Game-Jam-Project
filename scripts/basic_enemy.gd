@@ -4,7 +4,7 @@ class_name Enemy
 # basic player movement attributes
 @export var move_speed_f: float = 130
 @export var move_speed_b: float = 100
-@export var turn_speed: float = 3
+@export var turn_speed: float = 20
 
 # bullet to be shot
 @export var bullet_scene: PackedScene
@@ -50,6 +50,8 @@ var is_rewinding: bool = false
 func _ready() -> void:
 	$Body.material.set_shader_parameter("is_invincible", false)
 	cannon_sprite.material.set_shader_parameter("is_invincible", false)
+	
+	makePath()
 
 func _process(_delta) -> void:
 	if moving_dir != 0:
@@ -70,6 +72,10 @@ func _physics_process(_delta: float) -> void:
 	
 	if is_rewinding:
 		return
+	
+	#move forwards towards player
+	var angleToPlayer = to_local(nav_agent.get_next_path_position()).normalized().angle()
+	rotation += (angleToPlayer + deg_to_rad(90))/turn_speed;
 	
 	checkForPlayer()
 	
@@ -207,10 +213,6 @@ func makePath() -> void:
 
 func _on_timer_timeout() -> void:
 	makePath()
-	
-	#move forwards towards player
-	var angleToPlayer = to_local(nav_agent.get_next_path_position()).normalized().angle()
-	rotation += angleToPlayer + deg_to_rad(90);
 	moving_dir = 1;
 
 func _on_rewind_count_timer_timeout() -> void:
