@@ -3,6 +3,12 @@ extends Node2D
 @onready var main_menu = $MainMenu
 @onready var camera: Camera2D = $Camera2D
 @onready var level: CurrentLevel = $"Current Level"
+@onready var pausemenu: Control = $GUI/Control/PauseMenu
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel") && !main_menu.visible:
+		pausemenu.visible = !pausemenu.visible
+		get_tree().paused = pausemenu.visible
 
 func _ready() -> void:
 	get_tree().paused = true
@@ -47,3 +53,7 @@ func level_lose() -> void:
 
 func _on_current_level_level_complete() -> void:
 	countdown_func()
+
+func _on_resume_pressed() -> void:
+	pausemenu.visible = !pausemenu.visible
+	get_tree().paused = pausemenu.visible
