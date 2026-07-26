@@ -4,7 +4,7 @@ class_name Enemy
 # basic player movement attributes
 @export var move_speed_f: float = 130
 @export var move_speed_b: float = 100
-@export var turn_speed: float = 20
+@export var turn_resolution: float = 20
 
 # bullet to be shot
 @export var bullet_scene: PackedScene
@@ -75,7 +75,7 @@ func _physics_process(_delta: float) -> void:
 	
 	#move forwards towards player
 	var angleToPlayer = to_local(nav_agent.get_next_path_position()).normalized().angle()
-	rotation += (angleToPlayer + deg_to_rad(90))/turn_speed;
+	rotation += (angleToPlayer + deg_to_rad(90))/turn_resolution;
 	
 	checkForPlayer()
 	
@@ -101,7 +101,7 @@ func _physics_process(_delta: float) -> void:
 			global_position.x = -x_size
 	#movment and rotation:
 	if turning != 0:
-		rotate(turning * deg_to_rad(turn_speed))
+		rotate(turning * deg_to_rad(turn_resolution))
 	if moving_dir != 0:
 		velocity = Vector2.ZERO
 		if moving_dir > 0:
