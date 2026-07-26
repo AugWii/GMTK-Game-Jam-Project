@@ -32,7 +32,10 @@ func countdown_func() -> void:
 		countdown_label.add_theme_font_size_override("font_size", 120)
 		countdown_label.text = "TAKE THE COUNT DOWN!!!"
 		await get_tree().create_timer(2.0).timeout
-	else:
+	elif level.curr_level_num == 6:
+		countdown_label.add_theme_font_size_override("font_size", 120)
+		countdown_label.text = "TANKS FOR PLAYING!!!"
+	elif level.curr_level_num != 6:
 		countdown_label.text = "Start!"
 		await get_tree().create_timer(1.0).timeout
 	countdown_ui.visible = false

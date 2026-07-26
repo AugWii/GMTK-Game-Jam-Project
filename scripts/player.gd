@@ -35,6 +35,8 @@ var is_rewinding: bool = false
 @onready var vulnerable_timer: Timer = $VulnerableTimer
 var is_vulnerable: bool = false
 
+var firstMovement: bool = true
+
 
 
 func _ready() -> void:
@@ -89,6 +91,20 @@ func _input(event: InputEvent) -> void:
 			cooldown_timer.start(shot_cooldown)
 
 func _physics_process(_delta: float) -> void:
+	if firstMovement:
+		if Input.is_key_pressed(KEY_W) || Input.is_key_pressed(KEY_UP):
+			moving_dir = 1
+			firstMovement = false
+		if Input.is_key_pressed(KEY_S) || Input.is_key_pressed(KEY_DOWN):
+			moving_dir = -1
+			firstMovement = false
+		if Input.is_key_pressed(KEY_A) || Input.is_key_pressed(KEY_LEFT):
+			turning = -1
+			firstMovement = false
+		if Input.is_key_pressed(KEY_D) || Input.is_key_pressed(KEY_RIGHT):
+			turning = 1
+			firstMovement = false
+	
 	if is_rewinding:
 		return
 	

@@ -149,10 +149,9 @@ func get_hit():
 	
 	if rewind_pos.size() > 0:
 		is_rewinding = true
+		$CollisionShape2D.disabled = true
 		$Body.material.set_shader_parameter("is_invincible", true)
 		cannon_sprite.material.set_shader_parameter("is_invincible", true)
-		
-		#TODO: set shader
 		
 		moving_dir = 0
 		turning = 0
@@ -201,10 +200,10 @@ func get_hit():
 			#print("position storage size #2: " + str(current_rewind.size()))
 		if rewind_pos.size() == 0:
 			queue_free()
-		#TODO: remove shader
 		
 		$Body.material.set_shader_parameter("is_invincible", false)
 		cannon_sprite.material.set_shader_parameter("is_invincible", false)
+		$CollisionShape2D.disabled = false
 		is_rewinding = false
 
 #Pathfinding Code:

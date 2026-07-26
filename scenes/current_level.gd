@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 		if node is Enemy:
 			enemies_left += 1
 	
-	if enemies_left == 0:
+	if enemies_left == 0 && curr_level_num != 6:
 		LoadLevel(curr_level_num + 1)
 		level_complete.emit()
 

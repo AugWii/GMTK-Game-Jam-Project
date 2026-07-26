@@ -141,7 +141,6 @@ texture = ExtResource("6_b7fci")
 offset = Vector2(0, -175)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1516346738]
-visible = false
 shape = SubResource("CapsuleShape2D_q3shg")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=727220146]

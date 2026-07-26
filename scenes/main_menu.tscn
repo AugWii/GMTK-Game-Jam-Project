@@ -38,23 +38,32 @@ alignment = 1
 [node name="Label" type="Label" parent="Control/VBoxContainer" unique_id=937825085]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
-text = "Game Title Here"
+text = "TANKENSTIEN"
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="Control/VBoxContainer" unique_id=1662710927]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "How To Play:"
+text = "
+How To Play:"
 horizontal_alignment = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Control/VBoxContainer" unique_id=1528956963]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 20
-text = "Use WASD to move.
-Left-click to shoot.
-Hitting an enemy will rewind them a few seconds.
-Being hit will cause you to be rewound a few seconds, after which, you are vulnerable. If you are hit while vulnerable, you lose.
-To win, rewind all enemies past their original starting positions."
+text = "Use WASD to move
+
+Left-click to shoot
+ You can have only have 5 bullets on screen at a time
+
+Hitting an enemy will rewind them a few seconds
+
+Being hit will cause you to be rewound a few seconds, after which, you are vulnerable
+If you are hit while vulnerable, you lose
+
+To win, rewind all enemies past their original starting positions
+
+"
 fit_content = true
 horizontal_alignment = 1
 
