@@ -141,6 +141,9 @@ func checkForPlayer() -> void:
 	if(result): playerSighted = false
 	else: playerSighted = true
 
+func disableCollision():
+	$CollisionShape2D.disabled = true
+
 func get_hit():
 	if is_rewinding: return
 	
@@ -149,7 +152,7 @@ func get_hit():
 	
 	if rewind_pos.size() > 0:
 		is_rewinding = true
-		$CollisionShape2D.disabled = true
+		call_deferred("disableCollision")
 		$Body.material.set_shader_parameter("is_invincible", true)
 		cannon_sprite.material.set_shader_parameter("is_invincible", true)
 		

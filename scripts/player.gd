@@ -150,6 +150,7 @@ func player_hit() -> void:
 		return
 	if rewind_pos.size() > 0:
 		is_rewinding = true
+		firstMovement = true
 		moving_dir = 0
 		turning = 0
 		process_mode = Node.PROCESS_MODE_ALWAYS
