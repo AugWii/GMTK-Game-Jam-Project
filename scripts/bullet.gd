@@ -65,4 +65,5 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		body.player_hit()
 		valid_hit = true
 	if valid_hit:
+		$"../../../../../ExplosionSound".play()
 		queue_free()

@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c20lyu1qnm8um" path="res://scenes/Level 4.tscn" id="7_tipki"]
 [ext_resource type="PackedScene" uid="uid://nhda15qswcd0" path="res://scenes/Level 5.tscn" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://fnty6wqjo407" path="res://scenes/End Scene.tscn" id="9_85g3d"]
+[ext_resource type="AudioStream" uid="uid://tprr8whp32a6" path="res://universfield-epic-cinematic-explosion-454857.mp3" id="10_choun"]
 
 [node name="Main" type="Node2D" unique_id=1539732622]
 script = ExtResource("1_sugp2")
@@ -120,6 +121,10 @@ Level3 = ExtResource("6_o6xl0")
 Level4 = ExtResource("7_tipki")
 Level5 = ExtResource("8_tipki")
 EndScreen = ExtResource("9_85g3d")
+
+[node name="ExplosionSound" type="AudioStreamPlayer" parent="." unique_id=1824317227]
+process_mode = 3
+stream = ExtResource("10_choun")
 
 [connection signal="pressed" from="GUI/Control/PauseMenu/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="GUI/Control/PauseMenu/VBoxContainer/Return" to="." method="_on_return_pressed"]
