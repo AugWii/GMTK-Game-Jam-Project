@@ -13,7 +13,7 @@
 [node name="Main" type="Node2D" unique_id=1539732622]
 script = ExtResource("1_sugp2")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=769795106]
+[node name="Main Camera" type="Camera2D" parent="." unique_id=769795106]
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=801300297]
 

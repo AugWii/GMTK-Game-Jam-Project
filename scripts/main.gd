@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var main_menu = $MainMenu
-@onready var camera: Camera2D = $Camera2D
 @onready var level: CurrentLevel = $"Current Level"
 
 func _ready() -> void:
