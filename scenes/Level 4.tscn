@@ -94,6 +94,13 @@ rotation = 1.5707964
 scale = Vector2(1.5141776, 1.5141776)
 texture = ExtResource("4_f0git")
 
+[node name="ColorRect" type="ColorRect" parent="." unique_id=748312835]
+offset_left = -1033.0
+offset_top = -621.0
+offset_right = 1057.0
+offset_bottom = 629.0
+color = Color(0.32156864, 0.32156864, 0.32156864, 0.32941177)
+
 [node name="Player" parent="." unique_id=1300953787 instance=ExtResource("5_j8fpy")]
 position = Vector2(-610, -226)
 

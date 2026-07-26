@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dlrnkn00xcdak" path="res://scenes/Level 1.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://c20lyu1qnm8um" path="res://scenes/Level 4.tscn" id="7_tipki"]
 [ext_resource type="PackedScene" uid="uid://nhda15qswcd0" path="res://scenes/Level 5.tscn" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://fnty6wqjo407" path="res://scenes/End Scene.tscn" id="9_85g3d"]
 
 [node name="Main" type="Node2D" unique_id=1539732622]
 script = ExtResource("1_sugp2")
@@ -70,6 +71,7 @@ Level2 = ExtResource("5_tbgi4")
 Level3 = ExtResource("6_o6xl0")
 Level4 = ExtResource("7_tipki")
 Level5 = ExtResource("8_tipki")
+EndScreen = ExtResource("9_85g3d")
 
 [connection signal="start_game" from="MainMenu" to="." method="_on_main_menu_start_game"]
 [connection signal="level_complete" from="Current Level" to="." method="_on_current_level_level_complete"]

@@ -89,11 +89,17 @@ tile_map_data = PackedByteArray("AAAIAA4AAAABAAAAAAAcAA4AAAABAAAAAAASAAYAAAABAAA
 tile_set = SubResource("TileSet_4nftw")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1126273365]
-visible = false
 position = Vector2(78.800575, 275.54495)
 rotation = 1.5707964
 scale = Vector2(1.5122902, 1.5122899)
 texture = ExtResource("4_bd8t5")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=191711709]
+offset_left = -1033.0
+offset_top = -621.0
+offset_right = 1057.0
+offset_bottom = 629.0
+color = Color(0.32156864, 0.32156864, 0.32156864, 0.32941177)
 
 [node name="Player" parent="." unique_id=1300953787 instance=ExtResource("4_le1l2")]
 position = Vector2(-640, 256)
