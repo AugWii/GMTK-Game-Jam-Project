@@ -14,6 +14,10 @@
 [ext_resource type="AudioStream" uid="uid://y3ydww80a8vi" path="res://reverse.wav" id="12_eb6dy"]
 [ext_resource type="AudioStream" uid="uid://br1om3lfke6vw" path="res://738324__suhomunriko__hit_sound.wav" id="13_trceg"]
 [ext_resource type="AudioStream" uid="uid://buxqtiocu33cu" path="res://win sound.mp3" id="14_a8y0u"]
+[ext_resource type="AudioStream" uid="uid://v8mjt6ugy8gl" path="res://music/TrackenstienLoop.mp3" id="15_dp3eg"]
+[ext_resource type="AudioStream" uid="uid://uo58xxwckgrn" path="res://music/SkeleTrackLoop.mp3" id="16_0ld40"]
+[ext_resource type="AudioStream" uid="uid://do77xd32a8ls6" path="res://music/TrackOLoop.mp3" id="17_gqmmt"]
+[ext_resource type="AudioStream" uid="uid://b4bvgrbshynqw" path="res://music/TrackulaLoop.mp3" id="18_yc10j"]
 
 [node name="Main" type="Node2D" unique_id=1539732622]
 script = ExtResource("1_sugp2")
@@ -153,6 +157,21 @@ max_polyphony = 5
 [node name="VictorySound" type="AudioStreamPlayer" parent="Audio" unique_id=1852216737]
 process_mode = 3
 stream = ExtResource("14_a8y0u")
+
+[node name="Music" type="Node" parent="." unique_id=1665030094]
+
+[node name="TANKENSTEIN" type="AudioStreamPlayer" parent="Music" unique_id=2027158000]
+stream = ExtResource("15_dp3eg")
+autoplay = true
+
+[node name="SKELETANK" type="AudioStreamPlayer" parent="Music" unique_id=877873028]
+stream = ExtResource("16_0ld40")
+
+[node name="TANK O LANTERN" type="AudioStreamPlayer" parent="Music" unique_id=805268854]
+stream = ExtResource("17_gqmmt")
+
+[node name="COUNT TANKULA" type="AudioStreamPlayer" parent="Music" unique_id=550369445]
+stream = ExtResource("18_yc10j")
 
 [connection signal="pressed" from="GUI/Control/PauseMenu/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="GUI/Control/PauseMenu/VBoxContainer/Return" to="." method="_on_return_pressed"]
