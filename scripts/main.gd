@@ -4,6 +4,8 @@ extends Node2D
 @onready var level: CurrentLevel = $"Current Level"
 @onready var pausemenu: Control = $GUI/Control/PauseMenu
 
+var score: Array[int] = [0, 0, 0, 0, 0, 0]
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") && !main_menu.visible:
 		pausemenu.visible = !pausemenu.visible
@@ -58,9 +60,14 @@ func countdown_func() -> void:
 		countdown_label.text = "TANKS FOR PLAYING!!!"
 		$Audio/VictorySound.play()
 		await get_tree().create_timer(5.0).timeout
+		countdown_label.text = "YOUR TOTAL SCORE WAS: " + str(score[0] + score[1] + score[2] + score[3] + score[4])
+		await get_tree().create_timer(5.0).timeout
 	elif level.curr_level_num != 6:
 		countdown_label.text = "Start!"
 		await get_tree().create_timer(1.0).timeout
+		score[level.curr_level_num-1] = 0
+		$GUI/Control/LevelScore.text = "Level Score: " + str(score[level.curr_level_num-1])
+		$ScoreTimer.start()
 	countdown_ui.visible = false
 	get_tree().paused = false
 
@@ -80,3 +87,9 @@ func _on_return_pressed() -> void:
 	main_menu.visible = true
 	pausemenu.visible = false
 	level.LoadLevel(0)
+
+
+func _on_score_timer_timeout() -> void:
+	score[level.curr_level_num-1] += 1
+	$GUI/Control/LevelScore.text = "Level Score: " + str(score[level.curr_level_num-1])
+	$ScoreTimer.start()

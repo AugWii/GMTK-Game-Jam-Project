@@ -118,6 +118,21 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Return to Main Menu"
 
+[node name="LevelScore" type="Label" parent="GUI/Control" unique_id=1992231053]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -60.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 75.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.043039158, 0.04303915, 0.04303915, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 40
+
 [node name="MainMenu" parent="." unique_id=2042218293 instance=ExtResource("4_jyhfs")]
 visible = false
 
@@ -173,7 +188,10 @@ stream = ExtResource("17_gqmmt")
 [node name="COUNT TANKULA" type="AudioStreamPlayer" parent="Music" unique_id=550369445]
 stream = ExtResource("18_yc10j")
 
+[node name="ScoreTimer" type="Timer" parent="." unique_id=1148598590]
+
 [connection signal="pressed" from="GUI/Control/PauseMenu/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="GUI/Control/PauseMenu/VBoxContainer/Return" to="." method="_on_return_pressed"]
 [connection signal="start_game" from="MainMenu" to="." method="_on_main_menu_start_game"]
 [connection signal="level_complete" from="Current Level" to="." method="_on_current_level_level_complete"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
