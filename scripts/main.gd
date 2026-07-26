@@ -57,3 +57,9 @@ func _on_current_level_level_complete() -> void:
 func _on_resume_pressed() -> void:
 	pausemenu.visible = !pausemenu.visible
 	get_tree().paused = pausemenu.visible
+
+func _on_return_pressed() -> void:
+	get_tree().paused = false
+	main_menu.visible = true
+	pausemenu.visible = false
+	level.LoadLevel(0)

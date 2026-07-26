@@ -104,6 +104,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Resume"
 
+[node name="Return" type="Button" parent="GUI/Control/PauseMenu/VBoxContainer" unique_id=668069892]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Return to Main Menu"
+
 [node name="MainMenu" parent="." unique_id=2042218293 instance=ExtResource("4_jyhfs")]
 visible = false
 
@@ -117,5 +122,6 @@ Level5 = ExtResource("8_tipki")
 EndScreen = ExtResource("9_85g3d")
 
 [connection signal="pressed" from="GUI/Control/PauseMenu/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="GUI/Control/PauseMenu/VBoxContainer/Return" to="." method="_on_return_pressed"]
 [connection signal="start_game" from="MainMenu" to="." method="_on_main_menu_start_game"]
 [connection signal="level_complete" from="Current Level" to="." method="_on_current_level_level_complete"]
