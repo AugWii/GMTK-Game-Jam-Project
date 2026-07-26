@@ -152,6 +152,7 @@ func get_hit():
 	
 	if rewind_pos.size() > 0:
 		is_rewinding = true
+		$"../../../Audio/EnemyRewindSound".play(1.2)
 		call_deferred("disableCollision")
 		$Body.material.set_shader_parameter("is_invincible", true)
 		cannon_sprite.material.set_shader_parameter("is_invincible", true)
@@ -202,6 +203,7 @@ func get_hit():
 			pos_tween.tween_property(cannon_sprite, "rotation", shortest_cannon_angle, rewind_timer.wait_time / 4)
 			#print("position storage size #2: " + str(current_rewind.size()))
 		if rewind_pos.size() == 0:
+			$"../../../Audio/ExplosionSound".play()
 			queue_free()
 		
 		$Body.material.set_shader_parameter("is_invincible", false)

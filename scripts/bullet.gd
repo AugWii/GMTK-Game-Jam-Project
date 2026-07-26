@@ -45,6 +45,7 @@ func _physics_process(_delta: float) -> void:
 	
 	var collision = move_and_collide(velocity)
 	if collision:
+		$"../../../../../Audio/BounceSound".play()
 		velocity = velocity.bounce(collision.get_normal())
 		rotation = velocity.angle() + deg_to_rad(90)
 		if bouces_left == 0:
@@ -59,11 +60,12 @@ func _on_life_timer_timeout() -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	var valid_hit = false
 	if body is Enemy:
+		#$"../../../../../Audio/ExplosionSound".play()
 		body.get_hit()
 		valid_hit = true
 	if body is Player:
 		body.player_hit()
 		valid_hit = true
 	if valid_hit:
-		$"../../../../../ExplosionSound".play()
+		$"../../../../../Audio/BounceSound".play()
 		queue_free()

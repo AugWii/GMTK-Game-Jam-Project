@@ -141,6 +141,7 @@ func _on_cooldown_timer_timeout() -> void:
 
 func player_hit() -> void:
 	if is_vulnerable:
+		$"../../../Audio/ExplosionSound".play()
 		is_vulnerable = false
 		$Body.material.set_shader_parameter("is_vulnerable", false)
 		cannon_sprite.material.set_shader_parameter("is_vulnerable", false)
@@ -149,6 +150,7 @@ func player_hit() -> void:
 		$/root/Main.level_lose()
 		return
 	if rewind_pos.size() > 0:
+		$"../../../Audio/RewindSound".play(1.2)
 		is_rewinding = true
 		firstMovement = true
 		moving_dir = 0

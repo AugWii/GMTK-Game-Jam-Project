@@ -10,6 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://nhda15qswcd0" path="res://scenes/Level 5.tscn" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://fnty6wqjo407" path="res://scenes/End Scene.tscn" id="9_85g3d"]
 [ext_resource type="AudioStream" uid="uid://tprr8whp32a6" path="res://universfield-epic-cinematic-explosion-454857.mp3" id="10_choun"]
+[ext_resource type="AudioStream" uid="uid://ctdg7tcyyh60i" path="res://593320__mosart1955__evil-laugh.mp3" id="11_ya4ey"]
+[ext_resource type="AudioStream" uid="uid://y3ydww80a8vi" path="res://reverse.wav" id="12_eb6dy"]
+[ext_resource type="AudioStream" uid="uid://br1om3lfke6vw" path="res://738324__suhomunriko__hit_sound.wav" id="13_trceg"]
+[ext_resource type="AudioStream" uid="uid://buxqtiocu33cu" path="res://win sound.mp3" id="14_a8y0u"]
 
 [node name="Main" type="Node2D" unique_id=1539732622]
 script = ExtResource("1_sugp2")
@@ -122,9 +126,33 @@ Level4 = ExtResource("7_tipki")
 Level5 = ExtResource("8_tipki")
 EndScreen = ExtResource("9_85g3d")
 
-[node name="ExplosionSound" type="AudioStreamPlayer" parent="." unique_id=1824317227]
+[node name="Audio" type="Node" parent="." unique_id=184637880]
+process_mode = 3
+
+[node name="ExplosionSound" type="AudioStreamPlayer" parent="Audio" unique_id=1824317227]
 process_mode = 3
 stream = ExtResource("10_choun")
+
+[node name="EvilLaugh" type="AudioStreamPlayer" parent="Audio" unique_id=1774411964]
+stream = ExtResource("11_ya4ey")
+
+[node name="RewindSound" type="AudioStreamPlayer" parent="Audio" unique_id=1930584197]
+process_mode = 3
+stream = ExtResource("12_eb6dy")
+
+[node name="EnemyRewindSound" type="AudioStreamPlayer" parent="Audio" unique_id=511955600]
+process_mode = 3
+stream = ExtResource("12_eb6dy")
+volume_db = -12.0
+
+[node name="BounceSound" type="AudioStreamPlayer" parent="Audio" unique_id=1556620371]
+process_mode = 3
+stream = ExtResource("13_trceg")
+max_polyphony = 5
+
+[node name="VictorySound" type="AudioStreamPlayer" parent="Audio" unique_id=1852216737]
+process_mode = 3
+stream = ExtResource("14_a8y0u")
 
 [connection signal="pressed" from="GUI/Control/PauseMenu/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="GUI/Control/PauseMenu/VBoxContainer/Return" to="." method="_on_return_pressed"]
