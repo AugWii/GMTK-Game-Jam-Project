@@ -54,6 +54,7 @@ theme_override_font_sizes/normal_font_size = 20
 text = "Use WASD to move
 
 Left-click to shoot
+Bullets bounce once
  You can have only have 5 bullets on screen at a time
 
 Hitting an enemy will rewind them a few seconds
